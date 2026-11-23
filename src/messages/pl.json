@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "title": "Portfolio i CV",
+    "description": "Portfolio projektowe, realizacje webowe oraz CV."
+  },
+  "nav": {
+    "brand": "Portfolio",
+    "design": "Design",
+    "websites": "Websites",
+    "cv": "CV",
+    "contactCta": "Kontakt",
+    "languageLabel": "Język",
+    "privacy": "Polityka prywatności",
+    "admin": "Admin"
+  },
+  "design": {
+    "badge": "Portfolio projektowe",
+    "title": "Projekty Design",
+    "subtitle": "Wybrane realizacje z zakresu projektowania wizualnego, brandingu oraz UI/UX.",
+    "emptyState": "Projekty design z bazy danych pojawią się tutaj.",
+    "sampleProjectTitle": "Studium przypadku Design (Wireframe)",
+    "sampleProjectSummary": "Przykładowy wpis projektu design przed podłączeniem bazy danych Supabase.",
+    "viewProject": "Zobacz projekt"
+  },
+  "websites": {
+    "badge": "Tworzenie stron",
+    "title": "Strony i aplikacje",
+    "subtitle": "Aplikacje webowe full-stack, strony firmowe oraz interaktywne realizacje.",
+    "emptyState": "Projekty stron internetowych z bazy danych pojawią się tutaj.",
+    "sampleProjectTitle": "Platforma webowa (Wireframe)",
+    "sampleProjectSummary": "Przykładowy wpis projektu strony przed podłączeniem bazy danych Supabase.",
+    "viewProject": "Zobacz projekt"
+  },
+  "cv": {
+    "badge": "Życiorys",
+    "title": "Życiorys / CV",
+    "subtitle": "Doświadczenie zawodowe, historia pracy oraz główne kompetencje.",
+    "summaryTitle": "Podsumowanie",
+    "summaryText": "Projektant oraz programista full-stack skupiony na przejrzystych systemach, czystych interfejsach i solidnej inżynierii.",
+    "experienceTitle": "Doświadczenie",
+    "experiencePlaceholder": "Wpisy doświadczenia zawodowego zarządzane w panelu admina pojawią się tutaj.",
+    "skillsTitle": "Umiejętności i technologie",
+    "skillsPlaceholder": "Narzędzia projektowe, Next.js, TypeScript, Tailwind CSS, Supabase."
+  },
+  "projectDetail": {
+    "badge": "Szczegóły projektu",
+    "backToDesign": "Powrót do Design",
+    "backToWebsites": "Powrót do Websites",
+    "slugLabel": "Slug projektu",
+    "overviewTitle": "Opis projektu",
+    "overviewPlaceholder": "Szczegółowa treść, galeria mediów oraz metadane będą pobierane dynamicznie z Supabase po slug."
+  },
+  "privacy": {
+    "badge": "Informacje prawne",
+    "title": "Polityka prywatności",
+    "updatedAt": "Ostatnia aktualizacja: 2026",
+    "intro": "Ta strona wyjaśnia sposób przetwarzania zgłoszeń z formularza kontaktowego oraz podstawowych danych technicznych.",
+    "dataCollectionTitle": "Zbieranie danych",
+    "dataCollectionText": "Informacje przesłane przez formularz kontaktowy (imię, email i wiadomość) służą wyłącznie do udzielenia odpowiedzi.",
+    "contactTitle": "Kontakt i wnioski dotyczące danych",
+    "contactText": "Aby zaktualizować lub usunąć przesłane dane, skontaktuj się poprzez sekcję kontaktową."
+  },
+  "contact": {
+    "title": "Kontakt",
+    "subtitle": "Wyślij wiadomość lub zapytanie o projekt.",
+    "nameLabel": "Imię",
+    "namePlaceholder": "Twoje imię",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "messageLabel": "Wiadomość",
+    "messagePlaceholder": "Opisz swój projekt...",
+    "submitButton": "Wyślij wiadomość",
+    "note": "Szkic wireframe: wysyłka przez Telegram API zostanie podłączona na etapie backendu."
+  },
+  "footer": {
+    "rights": "Fundament Portfolio i CV"
+  }
+}

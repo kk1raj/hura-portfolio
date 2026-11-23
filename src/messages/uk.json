@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "title": "Портфоліо та CV",
+    "description": "Дизайн-портфоліо, вебпроєкти та резюме."
+  },
+  "nav": {
+    "brand": "Портфоліо",
+    "design": "Design",
+    "websites": "Websites",
+    "cv": "CV",
+    "contactCta": "Контакти",
+    "languageLabel": "Мова",
+    "privacy": "Політика конфіденційності",
+    "admin": "Адмінка"
+  },
+  "design": {
+    "badge": "Дизайн-портфоліо",
+    "title": "Дизайн-роботи",
+    "subtitle": "Вибрані кейси з візуального дизайну, брендингу та UI/UX.",
+    "emptyState": "Дизайн-проєкти з бази даних з'являться тут.",
+    "sampleProjectTitle": "Дизайн-кейс (Wireframe)",
+    "sampleProjectSummary": "Тимчасова картка дизайн-проєкту до підключення даних із Supabase.",
+    "viewProject": "Відкрити проєкт"
+  },
+  "websites": {
+    "badge": "Веброзробка",
+    "title": "Сайти та вебдодатки",
+    "subtitle": "Повноцінні вебзастосунки, лендінги та інтерактивні рішення.",
+    "emptyState": "Вебпроєкти з бази даних з'являться тут.",
+    "sampleProjectTitle": "Вебплатформа (Wireframe)",
+    "sampleProjectSummary": "Тимчасова картка вебпроєкту до підключення даних із Supabase.",
+    "viewProject": "Відкрити проєкт"
+  },
+  "cv": {
+    "badge": "Резюме",
+    "title": "Резюме / CV",
+    "subtitle": "Професійний досвід, кар'єрна історія та ключові навички.",
+    "summaryTitle": "Про мене",
+    "summaryText": "Дизайнер та full-stack веброзробник, сфокусований на продуманих системах, чистому UI та надійній архітектурі.",
+    "experienceTitle": "Досвід роботи",
+    "experiencePlaceholder": "Записи про досвід роботи, керовані через адмін-панель, відображатимуться тут.",
+    "skillsTitle": "Навички та стек",
+    "skillsPlaceholder": "Дизайн-інструменти, Next.js, TypeScript, Tailwind CSS, Supabase."
+  },
+  "projectDetail": {
+    "badge": "Деталі проєкту",
+    "backToDesign": "Назад до Design",
+    "backToWebsites": "Назад до Websites",
+    "slugLabel": "Slug проєкту",
+    "overviewTitle": "Огляд проєкту",
+    "overviewPlaceholder": "Детальний опис, медіагалерея та метадані завантажуватимуться динамічно з Supabase за slug."
+  },
+  "privacy": {
+    "badge": "Правова інформація",
+    "title": "Політика конфіденційності",
+    "updatedAt": "Останнє оновлення: 2026",
+    "intro": "Ця сторінка пояснює, як обробляються звернення з контактної форми та базові технічні дані на цьому сайті.",
+    "dataCollectionTitle": "Збір даних",
+    "dataCollectionText": "Дані з контактної форми (ім'я, email та повідомлення) використовуються виключно для відповіді на ваш запит.",
+    "contactTitle": "Звернення щодо даних",
+    "contactText": "Якщо ви хочете оновити або видалити надіслану інформацію, зв'яжіться через розділ контактів."
+  },
+  "contact": {
+    "title": "Зв'язатися",
+    "subtitle": "Надішліть запит або повідомлення щодо співпраці.",
+    "nameLabel": "Ім'я",
+    "namePlaceholder": "Ваше ім'я",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "messageLabel": "Повідомлення",
+    "messagePlaceholder": "Розкажіть про ваш проєкт...",
+    "submitButton": "Надіслати",
+    "note": "Wireframe-заглушка: відправка в Telegram API буде підключена на етапі бекенду."
+  },
+  "footer": {
+    "rights": "Основа сайту-портфоліо та CV"
+  }
+}

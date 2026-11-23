@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "title": "Portfolio & CV",
+    "description": "Design portfolio, web development projects, and curriculum vitae."
+  },
+  "nav": {
+    "brand": "Portfolio",
+    "design": "Design",
+    "websites": "Websites",
+    "cv": "CV",
+    "contactCta": "Contact",
+    "languageLabel": "Language",
+    "privacy": "Privacy Policy",
+    "admin": "Admin"
+  },
+  "design": {
+    "badge": "Design Portfolio",
+    "title": "Design Works",
+    "subtitle": "Selected visual design, branding, and UI/UX case studies.",
+    "emptyState": "Design projects from the database will appear here.",
+    "sampleProjectTitle": "Design Case Study (Wireframe)",
+    "sampleProjectSummary": "Placeholder entry representing a design portfolio item before connecting Supabase data.",
+    "viewProject": "View project"
+  },
+  "websites": {
+    "badge": "Web Development",
+    "title": "Websites & Apps",
+    "subtitle": "Full-stack web applications, marketing sites, and interactive builds.",
+    "emptyState": "Website projects from the database will appear here.",
+    "sampleProjectTitle": "Web Platform (Wireframe)",
+    "sampleProjectSummary": "Placeholder entry representing a website project before connecting Supabase data.",
+    "viewProject": "View project"
+  },
+  "cv": {
+    "badge": "Curriculum Vitae",
+    "title": "Resume / CV",
+    "subtitle": "Professional background, work experience, and core competencies.",
+    "summaryTitle": "Summary",
+    "summaryText": "Designer and full-stack web developer focused on clear systems, clean interfaces, and reliable engineering.",
+    "experienceTitle": "Experience",
+    "experiencePlaceholder": "Work history entries managed via the admin panel will render here.",
+    "skillsTitle": "Skills & Stack",
+    "skillsPlaceholder": "Design tools, Next.js, TypeScript, Tailwind CSS, Supabase."
+  },
+  "projectDetail": {
+    "badge": "Project Details",
+    "backToDesign": "Back to Design",
+    "backToWebsites": "Back to Websites",
+    "slugLabel": "Project slug",
+    "overviewTitle": "Project Overview",
+    "overviewPlaceholder": "Detailed project content, media gallery, and metadata will load dynamically from Supabase by slug."
+  },
+  "privacy": {
+    "badge": "Legal",
+    "title": "Privacy Policy",
+    "updatedAt": "Last updated: 2026",
+    "intro": "This page explains how contact form submissions and basic technical data are handled on this portfolio website.",
+    "dataCollectionTitle": "Data Collection",
+    "dataCollectionText": "Information submitted through the contact form (name, email, and message) is used solely to respond to your inquiry.",
+    "contactTitle": "Contact & Data Requests",
+    "contactText": "If you would like your inquiry details deleted or updated, please reach out via the contact section."
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "subtitle": "Send a direct inquiry or project request.",
+    "nameLabel": "Name",
+    "namePlaceholder": "Your name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Tell me about your project...",
+    "submitButton": "Send message",
+    "note": "Wireframe placeholder: Telegram API submission will be wired in the backend stage."
+  },
+  "footer": {
+    "rights": "Portfolio & CV Foundation"
+  }
+}
