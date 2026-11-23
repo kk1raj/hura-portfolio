@@ -21,9 +21,8 @@ function getLevelStyle(rawLevel: string): LevelStyle {
     normalized.includes("c2")
   ) {
     return {
-      pillClass:
-        "border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300",
-      dotClass: "bg-emerald-500",
+      pillClass: "border-emerald-400/50 bg-emerald-500/20 text-emerald-200",
+      dotClass: "bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.75)]",
     };
   }
 
@@ -33,32 +32,28 @@ function getLevelStyle(rawLevel: string): LevelStyle {
     normalized.includes("fluent")
   ) {
     return {
-      pillClass:
-        "border-blue-500/40 bg-blue-500/10 text-blue-700 dark:text-blue-300",
-      dotClass: "bg-blue-500",
+      pillClass: "border-sky-400/50 bg-sky-500/20 text-sky-200",
+      dotClass: "bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.75)]",
     };
   }
 
   if (normalized.includes("b2") || normalized.includes("upper")) {
     return {
-      pillClass:
-        "border-amber-500/40 bg-amber-500/10 text-amber-700 dark:text-amber-300",
-      dotClass: "bg-amber-500",
+      pillClass: "border-amber-400/50 bg-amber-500/20 text-amber-200",
+      dotClass: "bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.75)]",
     };
   }
 
   if (normalized.includes("b1") || normalized.includes("intermediate")) {
     return {
-      pillClass:
-        "border-orange-500/40 bg-orange-500/10 text-orange-700 dark:text-orange-300",
-      dotClass: "bg-orange-500",
+      pillClass: "border-orange-400/50 bg-orange-500/20 text-orange-200",
+      dotClass: "bg-orange-400 shadow-[0_0_8px_rgba(251,146,60,0.75)]",
     };
   }
 
   return {
-    pillClass:
-      "border-rose-500/40 bg-rose-500/10 text-rose-700 dark:text-rose-300",
-    dotClass: "bg-rose-500",
+    pillClass: "border-rose-400/50 bg-rose-500/20 text-rose-200",
+    dotClass: "bg-rose-400 shadow-[0_0_8px_rgba(251,113,133,0.75)]",
   };
 }
 
@@ -67,7 +62,7 @@ export function LanguageBadgesRow({
   emptyText,
 }: LanguageBadgesRowProps) {
   if (languages.length === 0) {
-    return <p className="text-sm text-neutral-500">{emptyText}</p>;
+    return <p className="text-sm text-white/60">{emptyText}</p>;
   }
 
   return (
@@ -77,7 +72,7 @@ export function LanguageBadgesRow({
         return (
           <li
             key={`${item.language}-${idx}`}
-            className="inline-flex items-center gap-3 border border-neutral-200 dark:border-neutral-800 px-4 py-2.5 text-sm"
+            className="liquid-pill inline-flex items-center gap-3 rounded-full px-4 py-2 text-sm text-white"
           >
             <span
               className={`h-2.5 w-2.5 shrink-0 rounded-full ${style.dotClass}`}
@@ -85,7 +80,7 @@ export function LanguageBadgesRow({
             />
             <span className="font-medium">{item.language}</span>
             <span
-              className={`rounded border px-2 py-0.5 font-mono text-xs font-semibold ${style.pillClass}`}
+              className={`rounded-full border px-2.5 py-0.5 font-mono text-xs font-semibold ${style.pillClass}`}
             >
               {item.level}
             </span>

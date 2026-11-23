@@ -43,33 +43,37 @@ export default async function PrivacyPage({
   ];
 
   return (
-    <article className="max-w-3xl space-y-8">
+    <article className="mx-auto max-w-3xl space-y-6">
       <div>
         <BackButton label={t("backButton")} />
       </div>
 
-      <header className="space-y-2 border-b border-dashed border-neutral-300 dark:border-neutral-700 pb-6">
-        <p className="font-mono text-xs uppercase tracking-widest text-neutral-500">
-          {t("badge")}
-        </p>
-        <h1 className="text-3xl font-semibold tracking-tight">{t("title")}</h1>
-        <p className="font-mono text-xs text-neutral-500">{t("updatedAt")}</p>
-      </header>
+      <div className="liquid-glass space-y-8 rounded-[36px] p-6 sm:p-10">
+        <header className="space-y-2 border-b border-white/15 pb-6">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/55">
+            {t("badge")}
+          </p>
+          <h1 className="text-3xl font-semibold tracking-tight text-white">
+            {t("title")}
+          </h1>
+          <p className="font-mono text-xs text-white/55">{t("updatedAt")}</p>
+        </header>
 
-      <div className="space-y-6 text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
-        <p>{t("intro")}</p>
+        <div className="space-y-6 text-sm leading-relaxed text-white/75">
+          <p>{t("intro")}</p>
 
-        {sections.map((section) => (
-          <section key={section.title} className="space-y-2">
-            <h2 className="text-base font-medium text-foreground">
-              {section.title}
-            </h2>
-            <p>{section.text}</p>
-          </section>
-        ))}
+          {sections.map((section) => (
+            <section key={section.title} className="space-y-2">
+              <h2 className="text-base font-medium text-white">
+                {section.title}
+              </h2>
+              <p>{section.text}</p>
+            </section>
+          ))}
+        </div>
       </div>
 
-      <div className="border-t border-dashed border-neutral-300 dark:border-neutral-700 pt-6">
+      <div>
         <BackButton label={t("backButton")} />
       </div>
     </article>

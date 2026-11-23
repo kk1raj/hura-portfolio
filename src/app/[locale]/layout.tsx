@@ -7,11 +7,11 @@ import {
   getTranslations,
   setRequestLocale,
 } from "next-intl/server";
-import { ContactForm } from "@/components/ContactForm";
+import { ContactModal } from "@/components/ContactModal";
 import { CookieBanner } from "@/components/CookieBanner";
 import { CookieSettingsButton } from "@/components/CookieSettingsButton";
+import { FloatingSocialDock } from "@/components/FloatingSocialDock";
 import { Header } from "@/components/Header";
-import { SocialContactButtons } from "@/components/SocialContactButtons";
 import { Link } from "@/i18n/navigation";
 import { isValidLocale, LOCALES } from "@/i18n/routing";
 import { getSiteSettings } from "@/lib/data";
@@ -57,75 +57,36 @@ export default async function LocaleLayout({
 
   setRequestLocale(locale);
 
-  const [messages, tContact, tFooter, tNav, tCommon, settings] =
-    await Promise.all([
-      getMessages(),
-      getTranslations({ locale, namespace: "contact" }),
-      getTranslations({ locale, namespace: "footer" }),
-      getTranslations({ locale, namespace: "nav" }),
-      getTranslations({ locale, namespace: "common" }),
-      getSiteSettings(),
-    ]);
+  const [messages, tFooter, tNav, settings] = await Promise.all([
+    getMessages(),
+    getTranslations({ locale, namespace: "footer" }),
+    getTranslations({ locale, namespace: "nav" }),
+    getSiteSettings(),
+  ]);
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <div className="min-h-screen flex flex-col">
         <Header brandName={settings.fullName} />
 
-        <main className="flex-1 mx-auto w-full max-w-[1440px] px-6 py-12 md:px-12">
+        <main className="flex-1 mx-auto w-full max-w-[1440px] px-4 py-6 sm:px-6 md:px-10 md:py-10">
           {children}
         </main>
 
-        <section
-          id="contact"
-          aria-labelledby="contact-heading"
-          className="border-t border-neutral-200 dark:border-neutral-800 bg-neutral-50/40 dark:bg-neutral-950/40"
-        >
-          <div className="mx-auto max-w-[1440px] px-6 py-10 md:px-12">
-            <div className="mx-auto max-w-3xl space-y-6">
-              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-neutral-200 dark:border-neutral-800 pb-4">
-                <div className="space-y-1">
-                  <h2
-                    id="contact-heading"
-                    className="text-lg font-semibold uppercase tracking-[0.14em]"
-                  >
-                    {tContact("title")}
-                  </h2>
-                  <p className="text-xs text-neutral-600 dark:text-neutral-400">
-                    {tContact("subtitle")}
-                  </p>
-                </div>
-
-                <span className="border border-neutral-300 dark:border-neutral-700 px-2.5 py-1 font-mono text-[11px] uppercase tracking-wider">
-                  {settings.availableForWork
-                    ? tCommon("availableForWork")
-                    : tCommon("unavailableForWork")}
-                </span>
-              </div>
-
-              <ContactForm />
-
-              <div className="border-t border-dashed border-neutral-200 dark:border-neutral-800 pt-4">
-                <SocialContactButtons settings={settings} />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <footer className="border-t border-neutral-200 dark:border-neutral-800">
-          <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-4 px-6 py-6 text-xs text-neutral-500 md:px-12">
+        <footer className="border-t border-white/10 pb-20 sm:pb-8">
+          <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-4 px-6 py-6 text-xs text-white/50 md:px-10">
             <p>{tFooter("rights")}</p>
             <div className="flex flex-wrap items-center gap-4">
               <CookieSettingsButton />
               <Link
                 href="/privacy"
-                className="hover:text-foreground underline underline-offset-4"
+                className="underline underline-offset-4 transition-colors hover:text-white"
               >
                 {tNav("privacy")}
               </Link>
               <NextLink
                 href="/admin"
-                className="hover:text-foreground underline underline-offset-4"
+                className="underline underline-offset-4 transition-colors hover:text-white"
               >
                 {tNav("admin")}
               </NextLink>
@@ -133,6 +94,11 @@ export default async function LocaleLayout({
           </div>
         </footer>
 
+        <FloatingSocialDock
+          settings={settings}
+          contactLabel={tNav("contactCta")}
+        />
+        <ContactModal availableForWork={settings.availableForWork} />
         <CookieBanner />
       </div>
     </NextIntlClientProvider>

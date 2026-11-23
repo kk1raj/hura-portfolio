@@ -111,6 +111,7 @@
     "consentLink": "Polityką prywatności",
     "submitButton": "Wyślij wiadomość",
     "submittingButton": "Wysyłanie...",
+    "closeButton": "Zamknij",
     "successMessage": "Wiadomość została wysłana. Odpowiem wkrótce.",
     "errorGeneric": "Nie udało się wysłać wiadomości. Spróbuj później lub użyj bezpośredniego kontaktu.",
     "errorRateLimit": "Zbyt wiele wiadomości. Odczekaj 10 minut przed kolejną próbą.",

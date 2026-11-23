@@ -111,6 +111,7 @@
     "consentLink": "Privacy Policy",
     "submitButton": "Send message",
     "submittingButton": "Sending...",
+    "closeButton": "Close",
     "successMessage": "Message sent successfully. I will reply soon.",
     "errorGeneric": "Failed to send message. Please try again later or use direct contacts.",
     "errorRateLimit": "Too many messages sent. Please wait 10 minutes before trying again.",

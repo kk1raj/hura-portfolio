@@ -101,27 +101,27 @@ export function CookieBanner() {
   return (
     <aside
       aria-label={t("title")}
-      className="fixed inset-x-0 bottom-0 z-50 border-t border-neutral-300 dark:border-neutral-700 bg-background/95 backdrop-blur-sm"
+      className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-4xl rounded-[32px] liquid-glass p-5 sm:p-6"
     >
-      <div className="mx-auto max-w-5xl space-y-4 px-4 py-5">
+      <div className="space-y-4">
         <div className="space-y-1">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 className="text-sm font-semibold">{t("title")}</h2>
+            <h2 className="text-sm font-semibold text-white">{t("title")}</h2>
             <Link
               href="/privacy"
               onClick={() => setIsManuallyOpen(false)}
-              className="text-xs underline underline-offset-4 text-neutral-600 hover:text-foreground dark:text-neutral-400"
+              className="text-xs underline underline-offset-4 text-white/70 hover:text-white"
             >
               {t("privacyLink")}
             </Link>
           </div>
-          <p className="text-xs text-neutral-600 dark:text-neutral-400">
+          <p className="text-xs text-white/70">
             {t("description")}
           </p>
         </div>
 
         <div className="grid gap-3 sm:grid-cols-2">
-          <label className="flex items-start gap-2.5 rounded border border-neutral-200 dark:border-neutral-800 p-3 text-xs">
+          <label className="flex items-start gap-2.5 rounded-2xl border border-white/15 bg-white/5 p-3 text-xs">
             <input
               type="checkbox"
               checked
@@ -129,14 +129,14 @@ export function CookieBanner() {
               className="mt-0.5 h-4 w-4 shrink-0"
             />
             <span>
-              <strong className="block font-medium text-foreground">
+              <strong className="block font-medium text-white">
                 {t("necessaryTitle")}
               </strong>
-              <span className="text-neutral-500">{t("necessaryDesc")}</span>
+              <span className="text-white/60">{t("necessaryDesc")}</span>
             </span>
           </label>
 
-          <label className="flex items-start gap-2.5 rounded border border-neutral-200 dark:border-neutral-800 p-3 text-xs cursor-pointer">
+          <label className="flex items-start gap-2.5 rounded-2xl border border-white/15 bg-white/5 p-3 text-xs cursor-pointer">
             <input
               type="checkbox"
               checked={analyticsChecked}
@@ -144,10 +144,10 @@ export function CookieBanner() {
               className="mt-0.5 h-4 w-4 shrink-0"
             />
             <span>
-              <strong className="block font-medium text-foreground">
+              <strong className="block font-medium text-white">
                 {t("analyticsTitle")}
               </strong>
-              <span className="text-neutral-500">{t("analyticsDesc")}</span>
+              <span className="text-white/60">{t("analyticsDesc")}</span>
             </span>
           </label>
         </div>
@@ -156,21 +156,21 @@ export function CookieBanner() {
           <button
             type="button"
             onClick={() => saveConsent(true)}
-            className="rounded-md bg-neutral-900 px-3 py-1.5 text-xs font-medium text-white hover:opacity-90 dark:bg-neutral-100 dark:text-neutral-900"
+            className="liquid-drop-active rounded-full px-4 py-1.5 text-xs font-medium text-white transition-transform hover:scale-105 active:scale-95"
           >
             {t("acceptAll")}
           </button>
           <button
             type="button"
             onClick={() => saveConsent(false)}
-            className="rounded-md border border-neutral-300 dark:border-neutral-700 px-3 py-1.5 text-xs font-medium hover:bg-neutral-100 dark:hover:bg-neutral-900"
+            className="liquid-pill rounded-full px-4 py-1.5 text-xs font-medium text-white/85 transition-transform hover:scale-105 active:scale-95"
           >
             {t("necessaryOnly")}
           </button>
           <button
             type="button"
             onClick={() => saveConsent(analyticsChecked)}
-            className="rounded-md border border-neutral-300 dark:border-neutral-700 px-3 py-1.5 text-xs font-medium hover:bg-neutral-100 dark:hover:bg-neutral-900"
+            className="liquid-pill rounded-full px-4 py-1.5 text-xs font-medium text-white/85 transition-transform hover:scale-105 active:scale-95"
           >
             {t("savePreferences")}
           </button>

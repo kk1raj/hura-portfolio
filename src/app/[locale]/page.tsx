@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ArrowRight } from "lucide-react";
@@ -66,58 +67,93 @@ export default async function HomePage({
   ]);
 
   const aboutText = getLocalizedValue(cvData.about, locale) || tCv("summaryText");
+  const displayName = settings.fullName?.trim() || "Hurakassi";
 
   return (
     <div className="space-y-20">
-      <section className="space-y-10">
-        <header className="space-y-6 border-b border-neutral-200 dark:border-neutral-800 pb-10">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="font-mono text-xs uppercase tracking-[0.22em] text-neutral-500">
-                {tCv("badge")}
-              </span>
-              <span className="border border-neutral-300 dark:border-neutral-700 px-2.5 py-0.5 font-mono text-[11px] uppercase tracking-wider">
+      <section className="relative flex min-h-[calc(100vh-7.5rem)] w-full flex-col justify-between gap-10 overflow-hidden rounded-[40px] border border-white/20 p-6 shadow-[0_30px_90px_rgba(0,0,0,0.6)] sm:p-10 lg:p-14">
+        {settings.heroImage ? (
+          <Image
+            src={settings.heroImage}
+            alt={displayName}
+            fill
+            priority
+            unoptimized
+            sizes="100vw"
+            className="object-cover"
+          />
+        ) : (
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-[#080b12]"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle at 20% 25%, rgba(99, 102, 241, 0.35), transparent 45%), radial-gradient(circle at 80% 30%, rgba(16, 185, 129, 0.25), transparent 45%), radial-gradient(circle at 50% 85%, rgba(236, 72, 153, 0.22), transparent 50%)",
+            }}
+          />
+        )}
+
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/45 to-black/85"
+        />
+
+        <div className="relative z-10 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-wrap items-center gap-2.5">
+            <span className="liquid-pill rounded-full px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-white/90">
+              {tCv("badge")}
+            </span>
+            <span className="liquid-pill inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium text-white">
+              <span
+                className={`h-2 w-2 rounded-full ${
+                  settings.availableForWork
+                    ? "bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.9)]"
+                    : "bg-amber-400"
+                }`}
+                aria-hidden="true"
+              />
+              <span>
                 {settings.availableForWork
                   ? tCommon("availableForWork")
                   : tCommon("unavailableForWork")}
               </span>
-            </div>
-
-            <Link
-              href="/cv"
-              className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-[0.16em] text-neutral-600 underline underline-offset-4 hover:text-foreground dark:text-neutral-400"
-            >
-              <span>{tCv("title")}</span>
-              <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-            </Link>
+            </span>
           </div>
 
-          <div className="grid gap-8 lg:grid-cols-[1.2fr_1.5fr] lg:items-end">
-            <div className="space-y-2">
-              <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-                {settings.fullName || "Hurakassi"}
-              </h1>
-              {settings.nickname && (
-                <p className="font-mono text-sm tracking-widest text-neutral-500">
-                  @{settings.nickname}
-                </p>
-              )}
-            </div>
+          <Link
+            href="/cv"
+            className="liquid-pill inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-medium text-white transition-all duration-300 hover:scale-105 hover:bg-white/20 active:scale-95"
+          >
+            <span>{tCv("title")}</span>
+            <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+          </Link>
+        </div>
 
-            <div className="space-y-2">
-              <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-neutral-500">
-                {tCv("summaryTitle")}
-              </h2>
-              <p className="whitespace-pre-line text-base leading-relaxed text-neutral-700 dark:text-neutral-300">
-                {aboutText}
+        <div className="relative z-10 grid gap-8 lg:grid-cols-[1.15fr_1.45fr] lg:items-end">
+          <div className="space-y-2">
+            <h1 className="text-5xl font-semibold tracking-tight text-white sm:text-6xl lg:text-7xl">
+              {displayName}
+            </h1>
+            {settings.nickname && (
+              <p className="font-mono text-sm tracking-[0.22em] text-white/65">
+                @{settings.nickname}
               </p>
-            </div>
+            )}
           </div>
-        </header>
 
-        <div className="space-y-8">
+          <div className="liquid-glass rounded-[28px] p-6">
+            <h2 className="mb-2 font-mono text-[11px] uppercase tracking-[0.2em] text-white/60">
+              {tCv("summaryTitle")}
+            </h2>
+            <p className="whitespace-pre-line text-sm leading-relaxed text-white/90 sm:text-base">
+              {aboutText}
+            </p>
+          </div>
+        </div>
+
+        <div className="relative z-10 space-y-6">
           <div className="space-y-3">
-            <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-neutral-500">
+            <h2 className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/65">
               {tCv("languagesTitle")}
             </h2>
             <LanguageBadgesRow
@@ -126,56 +162,56 @@ export default async function HomePage({
             />
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-2">
-            <article className="space-y-4 border border-neutral-200 dark:border-neutral-800 p-6">
-              <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-neutral-500">
+          <div className="grid gap-4 lg:grid-cols-2">
+            <article className="liquid-glass space-y-3 rounded-[28px] p-5 sm:p-6">
+              <h2 className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/60">
                 {tCv("educationTitle")}
               </h2>
               {cvData.education.length > 0 ? (
-                <ul className="space-y-3">
+                <ul className="space-y-2.5">
                   {cvData.education.map((item, idx) => (
                     <li
                       key={`${item.degree}-${idx}`}
-                      className="flex flex-wrap items-baseline justify-between gap-2 border-b border-dashed border-neutral-200 dark:border-neutral-800 pb-3 last:border-b-0 last:pb-0"
+                      className="flex flex-wrap items-baseline justify-between gap-2 border-b border-white/10 pb-2.5 last:border-b-0 last:pb-0"
                     >
                       <div>
-                        <p className="text-sm font-medium">{item.degree}</p>
-                        <p className="text-xs text-neutral-500">
+                        <p className="text-sm font-medium text-white">
+                          {item.degree}
+                        </p>
+                        <p className="text-xs text-white/65">
                           {item.institution}
                         </p>
                       </div>
-                      <span className="font-mono text-xs text-neutral-500">
+                      <span className="font-mono text-xs text-white/60">
                         {item.period}
                       </span>
                     </li>
                   ))}
                 </ul>
               ) : (
-                <p className="text-sm text-neutral-500">
-                  {tCv("educationEmpty")}
-                </p>
+                <p className="text-sm text-white/60">{tCv("educationEmpty")}</p>
               )}
             </article>
 
-            <article className="space-y-4 border border-neutral-200 dark:border-neutral-800 p-6">
-              <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-neutral-500">
+            <article className="liquid-glass space-y-3 rounded-[28px] p-5 sm:p-6">
+              <h2 className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/60">
                 {tCv("skillsTitle")}
               </h2>
               {cvData.skillCategories.length > 0 ? (
-                <div className="grid gap-4 sm:grid-cols-2">
+                <div className="grid gap-3 sm:grid-cols-2">
                   {cvData.skillCategories.map((group, idx) => (
                     <div
                       key={`${group.category}-${idx}`}
                       className="space-y-1.5"
                     >
-                      <h3 className="text-xs font-semibold uppercase tracking-wider text-neutral-500">
+                      <h3 className="text-xs font-semibold uppercase tracking-wider text-white/75">
                         {group.category}
                       </h3>
                       <ul className="flex flex-wrap gap-1.5">
                         {group.skills.map((skill) => (
                           <li
                             key={skill}
-                            className="border border-neutral-200 dark:border-neutral-800 px-2.5 py-0.5 font-mono text-xs"
+                            className="rounded-full border border-white/20 bg-white/10 px-2.5 py-0.5 font-mono text-xs text-white/90"
                           >
                             {skill}
                           </li>
@@ -185,7 +221,7 @@ export default async function HomePage({
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-neutral-500">
+                <p className="text-sm text-white/60">
                   {tCv("skillsPlaceholder")}
                 </p>
               )}
@@ -194,15 +230,15 @@ export default async function HomePage({
         </div>
       </section>
 
-      <section className="space-y-8 border-t border-neutral-200 dark:border-neutral-800 pt-14">
-        <header className="space-y-2">
-          <p className="font-mono text-xs uppercase tracking-[0.22em] text-neutral-500">
+      <section className="space-y-8">
+        <header className="space-y-2 px-1">
+          <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/50">
             {tWebsites("badge")}
           </p>
-          <h2 className="text-3xl font-semibold tracking-tight">
+          <h2 className="text-3xl font-semibold tracking-tight text-white">
             {tWebsites("title")}
           </h2>
-          <p className="max-w-2xl text-sm text-neutral-600 dark:text-neutral-400">
+          <p className="max-w-2xl text-sm text-white/65">
             {tWebsites("subtitle")}
           </p>
         </header>
@@ -228,15 +264,15 @@ export default async function HomePage({
         />
       </section>
 
-      <section className="space-y-8 border-t border-neutral-200 dark:border-neutral-800 pt-14">
-        <header className="space-y-2">
-          <p className="font-mono text-xs uppercase tracking-[0.22em] text-neutral-500">
+      <section className="space-y-8">
+        <header className="space-y-2 px-1">
+          <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/50">
             {tDesign("badge")}
           </p>
-          <h2 className="text-3xl font-semibold tracking-tight">
+          <h2 className="text-3xl font-semibold tracking-tight text-white">
             {tDesign("title")}
           </h2>
-          <p className="max-w-2xl text-sm text-neutral-600 dark:text-neutral-400">
+          <p className="max-w-2xl text-sm text-white/65">
             {tDesign("subtitle")}
           </p>
         </header>

@@ -22,7 +22,7 @@ export function BackButton({ label }: BackButtonProps) {
     <button
       type="button"
       onClick={handleBack}
-      className="inline-flex items-center gap-1.5 rounded-md border border-neutral-300 dark:border-neutral-700 px-3 py-1.5 text-sm font-medium text-neutral-700 hover:bg-neutral-100 hover:text-foreground dark:text-neutral-300 dark:hover:bg-neutral-900 transition-colors"
+      className="liquid-pill inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-medium text-white transition-all duration-300 hover:scale-105 hover:bg-white/20 active:scale-95"
     >
       <ArrowLeft className="h-4 w-4" aria-hidden="true" />
       <span>{label}</span>

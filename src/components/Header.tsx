@@ -1,7 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { Mail } from "lucide-react";
+import { MessageSquare } from "lucide-react";
+import { OPEN_CONTACT_MODAL_EVENT } from "@/components/ContactModal";
 import { Link, usePathname } from "@/i18n/navigation";
 import { LOCALES, type Locale } from "@/i18n/routing";
 
@@ -43,88 +45,149 @@ export function Header({ brandName }: HeaderProps) {
   const isHomeActive = pathname === "/";
   const displayBrand = brandName?.trim() || t("brand");
 
+  const activeNavIndex = NAV_TABS.findIndex((tab) => tab.isActive(pathname));
+  const [hoveredNavIndex, setHoveredNavIndex] = useState<number | null>(null);
+  const [hoveredLocaleIndex, setHoveredLocaleIndex] = useState<number | null>(
+    null
+  );
+
+  const visibleNavIndex =
+    hoveredNavIndex !== null ? hoveredNavIndex : activeNavIndex;
+  const showNavDrop = visibleNavIndex >= 0;
+
+  const activeLocaleIndex = LOCALES.indexOf(currentLocale);
+  const visibleLocaleIndex =
+    hoveredLocaleIndex !== null ? hoveredLocaleIndex : activeLocaleIndex;
+
   return (
-    <header className="sticky top-0 z-40 border-b border-neutral-200/80 dark:border-neutral-800/80 bg-background/95 backdrop-blur-sm">
-      <div className="mx-auto grid max-w-[1440px] grid-cols-2 items-center gap-4 px-6 py-4 md:grid-cols-3 md:px-12">
+    <header className="sticky top-0 z-40 w-full">
+      <div className="mx-auto grid max-w-[1440px] grid-cols-2 items-center gap-3 px-4 py-4 sm:px-6 md:grid-cols-3 md:px-10">
         <div className="justify-self-start">
           <Link
             href="/"
             aria-current={isHomeActive ? "page" : undefined}
-            className={
+            className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.22em] text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:scale-[1.05] active:scale-95 ${
               isHomeActive
-                ? "inline-block border-b border-foreground pb-0.5 text-xs font-semibold uppercase tracking-[0.24em] text-foreground"
-                : "inline-block text-xs font-semibold uppercase tracking-[0.24em] text-neutral-600 transition-colors hover:text-foreground dark:text-neutral-400"
-            }
+                ? "liquid-pill liquid-drop-active"
+                : "liquid-pill hover:bg-white/20"
+            }`}
           >
-            {displayBrand}
+            <span
+              className={`h-2 w-2 rounded-full transition-colors ${
+                isHomeActive ? "bg-white shadow-[0_0_10px_#fff]" : "bg-white/50"
+              }`}
+              aria-hidden="true"
+            />
+            <span>{displayBrand}</span>
           </Link>
         </div>
 
         <nav
           aria-label={t("brand")}
-          className="col-span-2 order-3 flex items-center justify-center gap-6 border-t border-neutral-200/70 pt-3 dark:border-neutral-800/70 md:col-span-1 md:order-2 md:border-t-0 md:pt-0"
+          onMouseLeave={() => setHoveredNavIndex(null)}
+          className="col-span-2 order-3 justify-self-center md:col-span-1 md:order-2"
         >
-          {NAV_TABS.map((tab) => {
-            const active = tab.isActive(pathname);
-            return (
-              <Link
-                key={tab.key}
-                href={tab.href}
-                aria-current={active ? "page" : undefined}
-                className={
-                  active
-                    ? "border-b border-foreground pb-0.5 text-xs font-semibold uppercase tracking-[0.18em] text-foreground"
-                    : "pb-0.5 text-xs font-medium uppercase tracking-[0.18em] text-neutral-500 transition-colors hover:text-foreground dark:text-neutral-400"
-                }
-              >
-                {t(tab.key)}
-              </Link>
-            );
-          })}
+          <div className="liquid-pill relative grid w-[300px] grid-cols-3 items-center rounded-full p-1.5 sm:w-[360px]">
+            <span
+              aria-hidden="true"
+              className={`pointer-events-none absolute top-1.5 bottom-1.5 left-1.5 w-[calc((100%-0.75rem)/3)] rounded-full liquid-drop-active transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
+                showNavDrop
+                  ? "opacity-100 scale-100"
+                  : "opacity-0 scale-90"
+              } ${hoveredNavIndex !== null ? "scale-x-[1.04]" : ""}`}
+              style={{
+                transform: `translateX(${Math.max(0, visibleNavIndex) * 100}%)`,
+              }}
+            />
+
+            {NAV_TABS.map((tab, idx) => {
+              const active = tab.isActive(pathname);
+              const highlighted = visibleNavIndex === idx;
+              return (
+                <Link
+                  key={tab.key}
+                  href={tab.href}
+                  aria-current={active ? "page" : undefined}
+                  onMouseEnter={() => setHoveredNavIndex(idx)}
+                  onFocus={() => setHoveredNavIndex(idx)}
+                  onBlur={() => setHoveredNavIndex(null)}
+                  className={`relative z-10 flex items-center justify-center rounded-full py-2 text-xs font-medium tracking-[0.08em] transition-all duration-300 active:scale-95 ${
+                    highlighted
+                      ? "text-white font-semibold"
+                      : "text-white/70 hover:text-white"
+                  }`}
+                >
+                  {t(tab.key)}
+                </Link>
+              );
+            })}
+          </div>
         </nav>
 
-        <div className="order-2 flex items-center justify-self-end gap-3 md:order-3">
+        <div className="order-2 flex items-center justify-self-end gap-2.5 md:order-3">
           <div
             role="group"
             aria-label={t("languageLabel")}
-            className="flex items-center gap-1 text-[11px] font-mono tracking-wider"
+            onMouseLeave={() => setHoveredLocaleIndex(null)}
+            className="liquid-pill relative hidden grid-cols-4 items-center rounded-full p-1 sm:grid"
           >
-            {LOCALES.map((loc, index) => {
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute top-1 bottom-1 left-1 w-[calc((100%-0.5rem)/4)] rounded-full bg-white/25 border border-white/35 shadow-[inset_0_1px_2px_rgba(255,255,255,0.6)] transition-all duration-400 ease-[cubic-bezier(0.32,0.72,0,1)]"
+              style={{
+                transform: `translateX(${Math.max(0, visibleLocaleIndex) * 100}%)`,
+              }}
+            />
+
+            {LOCALES.map((loc, idx) => {
               const isCurrent = loc === currentLocale;
               return (
-                <span key={loc} className="inline-flex items-center">
-                  {index > 0 && (
-                    <span
-                      className="mx-1 text-neutral-300 dark:text-neutral-700"
-                      aria-hidden="true"
-                    >
-                      /
-                    </span>
-                  )}
-                  <Link
-                    href={pathname}
-                    locale={loc}
-                    aria-current={isCurrent ? "true" : undefined}
-                    className={
-                      isCurrent
-                        ? "font-bold text-foreground underline underline-offset-4"
-                        : "text-neutral-500 transition-colors hover:text-foreground dark:text-neutral-400"
-                    }
-                  >
-                    {loc.toUpperCase()}
-                  </Link>
-                </span>
+                <Link
+                  key={loc}
+                  href={pathname}
+                  locale={loc}
+                  aria-current={isCurrent ? "true" : undefined}
+                  onMouseEnter={() => setHoveredLocaleIndex(idx)}
+                  className={`relative z-10 px-2.5 py-1 text-center font-mono text-[10px] font-semibold tracking-wider transition-colors active:scale-95 ${
+                    visibleLocaleIndex === idx
+                      ? "text-white"
+                      : "text-white/65 hover:text-white"
+                  }`}
+                >
+                  {loc.toUpperCase()}
+                </Link>
               );
             })}
           </div>
 
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-1.5 border border-foreground/30 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.14em] transition-colors hover:border-foreground hover:bg-foreground hover:text-background"
+          <div className="liquid-pill flex items-center gap-0.5 rounded-full p-1 sm:hidden">
+            {LOCALES.map((loc) => {
+              const isCurrent = loc === currentLocale;
+              return (
+                <Link
+                  key={loc}
+                  href={pathname}
+                  locale={loc}
+                  className={`rounded-full px-1.5 py-1 font-mono text-[10px] font-semibold ${
+                    isCurrent ? "bg-white/25 text-white" : "text-white/65"
+                  }`}
+                >
+                  {loc.toUpperCase()}
+                </Link>
+              );
+            })}
+          </div>
+
+          <button
+            type="button"
+            onClick={() =>
+              window.dispatchEvent(new Event(OPEN_CONTACT_MODAL_EVENT))
+            }
+            className="liquid-pill inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-medium text-white transition-all duration-300 hover:scale-[1.04] hover:bg-white/20 active:scale-95"
           >
-            <Mail className="h-3.5 w-3.5" aria-hidden="true" />
+            <MessageSquare className="h-3.5 w-3.5" aria-hidden="true" />
             <span>{t("contactCta")}</span>
-          </a>
+          </button>
         </div>
       </div>
     </header>

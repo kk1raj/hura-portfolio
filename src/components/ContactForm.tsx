@@ -2,12 +2,17 @@
 
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
+import { CheckCircle2 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 
 type TopicOption = "design" | "website" | "job" | "other";
 
-export function ContactForm() {
+interface ContactFormProps {
+  onNavigatePrivacy?: () => void;
+}
+
+export function ContactForm({ onNavigatePrivacy }: ContactFormProps) {
   const t = useTranslations("contact");
   const locale = useLocale() as Locale;
 
@@ -82,8 +87,29 @@ export function ContactForm() {
     }
   }
 
+  if (isSuccess) {
+    return (
+      <div
+        role="status"
+        className="flex flex-col items-center justify-center gap-4 rounded-[28px] border border-emerald-400/30 bg-emerald-500/10 px-6 py-10 text-center"
+      >
+        <div className="flex h-14 w-14 items-center justify-center rounded-full border border-emerald-400/40 bg-emerald-500/20 text-emerald-300 shadow-[0_0_24px_rgba(16,185,129,0.35)]">
+          <CheckCircle2 className="h-7 w-7" aria-hidden="true" />
+        </div>
+        <p className="text-base font-medium text-white">{t("successMessage")}</p>
+        <button
+          type="button"
+          onClick={() => setIsSuccess(false)}
+          className="liquid-pill rounded-full px-4 py-1.5 text-xs font-medium text-white/90 transition-transform hover:scale-105 active:scale-95"
+        >
+          {t("submitButton")}
+        </button>
+      </div>
+    );
+  }
+
   return (
-    <form onSubmit={(event) => void handleSubmit(event)} className="space-y-2.5">
+    <form onSubmit={(event) => void handleSubmit(event)} className="space-y-4">
       <div className="sr-only" aria-hidden="true">
         <label htmlFor="contact-website">Website</label>
         <input
@@ -97,9 +123,12 @@ export function ContactForm() {
         />
       </div>
 
-      <div className="grid gap-2.5 sm:grid-cols-3">
-        <div className="space-y-1">
-          <label htmlFor="contact-name" className="block text-xs font-medium">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <div className="space-y-1.5">
+          <label
+            htmlFor="contact-name"
+            className="block text-xs font-medium text-white/80"
+          >
             {t("nameLabel")}
           </label>
           <input
@@ -111,12 +140,15 @@ export function ContactForm() {
             value={name}
             onChange={(event) => setName(event.target.value)}
             placeholder={t("namePlaceholder")}
-            className="w-full rounded-md border border-neutral-300 dark:border-neutral-700 bg-background px-2.5 py-1.5 text-xs"
+            className="w-full rounded-2xl border border-white/20 bg-white/10 px-3.5 py-2.5 text-sm text-white placeholder:text-white/40 focus:border-white/50 focus:outline-none"
           />
         </div>
 
-        <div className="space-y-1">
-          <label htmlFor="contact-info" className="block text-xs font-medium">
+        <div className="space-y-1.5">
+          <label
+            htmlFor="contact-info"
+            className="block text-xs font-medium text-white/80"
+          >
             {t("contactFieldLabel")}
           </label>
           <input
@@ -129,31 +161,37 @@ export function ContactForm() {
             value={contact}
             onChange={(event) => setContact(event.target.value)}
             placeholder={t("contactFieldPlaceholder")}
-            className="w-full rounded-md border border-neutral-300 dark:border-neutral-700 bg-background px-2.5 py-1.5 text-xs"
+            className="w-full rounded-2xl border border-white/20 bg-white/10 px-3.5 py-2.5 text-sm text-white placeholder:text-white/40 focus:border-white/50 focus:outline-none"
           />
-        </div>
-
-        <div className="space-y-1">
-          <label htmlFor="contact-topic" className="block text-xs font-medium">
-            {t("topicLabel")}
-          </label>
-          <select
-            id="contact-topic"
-            name="topic"
-            value={topic}
-            onChange={(event) => setTopic(event.target.value as TopicOption)}
-            className="w-full rounded-md border border-neutral-300 dark:border-neutral-700 bg-background px-2.5 py-1.5 text-xs"
-          >
-            <option value="design">{t("topicDesign")}</option>
-            <option value="website">{t("topicWebsite")}</option>
-            <option value="job">{t("topicJob")}</option>
-            <option value="other">{t("topicOther")}</option>
-          </select>
         </div>
       </div>
 
-      <div className="space-y-1">
-        <label htmlFor="contact-message" className="block text-xs font-medium">
+      <div className="space-y-1.5">
+        <label
+          htmlFor="contact-topic"
+          className="block text-xs font-medium text-white/80"
+        >
+          {t("topicLabel")}
+        </label>
+        <select
+          id="contact-topic"
+          name="topic"
+          value={topic}
+          onChange={(event) => setTopic(event.target.value as TopicOption)}
+          className="w-full rounded-2xl border border-white/20 bg-neutral-900/90 px-3.5 py-2.5 text-sm text-white focus:border-white/50 focus:outline-none"
+        >
+          <option value="design">{t("topicDesign")}</option>
+          <option value="website">{t("topicWebsite")}</option>
+          <option value="job">{t("topicJob")}</option>
+          <option value="other">{t("topicOther")}</option>
+        </select>
+      </div>
+
+      <div className="space-y-1.5">
+        <label
+          htmlFor="contact-message"
+          className="block text-xs font-medium text-white/80"
+        >
           {t("messageLabel")}
         </label>
         <textarea
@@ -162,56 +200,48 @@ export function ContactForm() {
           required
           minLength={5}
           maxLength={4000}
-          rows={2}
+          rows={4}
           value={message}
           onChange={(event) => setMessage(event.target.value)}
           placeholder={t("messagePlaceholder")}
-          className="w-full rounded-md border border-neutral-300 dark:border-neutral-700 bg-background px-2.5 py-1.5 text-xs"
+          className="w-full rounded-2xl border border-white/20 bg-white/10 px-3.5 py-2.5 text-sm text-white placeholder:text-white/40 focus:border-white/50 focus:outline-none"
         />
       </div>
+
+      <label className="flex items-start gap-2.5 text-xs text-white/70">
+        <input
+          type="checkbox"
+          required
+          checked={consent}
+          onChange={(event) => setConsent(event.target.checked)}
+          className="mt-0.5 h-4 w-4 shrink-0 accent-white"
+        />
+        <span>
+          {t("consentText")}{" "}
+          <Link
+            href="/privacy"
+            onClick={onNavigatePrivacy}
+            className="text-white underline underline-offset-4 hover:opacity-80"
+          >
+            {t("consentLink")}
+          </Link>
+        </span>
+      </label>
 
       {error && (
         <p
           role="alert"
-          className="rounded-md border border-red-300 dark:border-red-900 bg-red-50 dark:bg-red-950/40 px-2.5 py-1.5 text-xs text-red-700 dark:text-red-300"
+          className="rounded-2xl border border-rose-400/40 bg-rose-500/15 px-3.5 py-2 text-xs text-rose-200"
         >
           {error}
         </p>
       )}
 
-      {isSuccess && (
-        <p
-          role="status"
-          className="rounded-md border border-emerald-300 dark:border-emerald-900 bg-emerald-50 dark:bg-emerald-950/40 px-2.5 py-1.5 text-xs text-emerald-700 dark:text-emerald-300"
-        >
-          {t("successMessage")}
-        </p>
-      )}
-
-      <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
-        <label className="flex items-start gap-2 text-xs text-neutral-600 dark:text-neutral-400">
-          <input
-            type="checkbox"
-            required
-            checked={consent}
-            onChange={(event) => setConsent(event.target.checked)}
-            className="mt-0.5 h-3.5 w-3.5 shrink-0"
-          />
-          <span>
-            {t("consentText")}{" "}
-            <Link
-              href="/privacy"
-              className="underline underline-offset-4 hover:text-foreground"
-            >
-              {t("consentLink")}
-            </Link>
-          </span>
-        </label>
-
+      <div className="pt-1">
         <button
           type="submit"
           disabled={isSubmitting}
-          className="rounded-md bg-neutral-900 px-3.5 py-1.5 text-xs font-medium text-white hover:opacity-90 disabled:opacity-50 dark:bg-neutral-100 dark:text-neutral-900"
+          className="liquid-drop-active w-full rounded-full py-3 text-sm font-semibold text-white transition-all duration-300 hover:scale-[1.01] active:scale-[0.98] disabled:opacity-50"
         >
           {isSubmitting ? t("submittingButton") : t("submitButton")}
         </button>
