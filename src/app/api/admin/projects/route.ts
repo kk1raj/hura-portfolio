@@ -1,7 +1,11 @@
 import { revalidatePath } from "next/cache";
 import { type NextRequest, NextResponse } from "next/server";
 import { requireAdminRequest } from "@/lib/admin-auth";
-import { getAdminSupabaseClient } from "@/lib/supabase/server";
+import {
+  getAdminSupabaseClient,
+  getServerReadSupabaseClient,
+  MissingSupabaseConfigError,
+} from "@/lib/supabase/server";
 import {
   normalizeProjectRow,
   ProjectFormInputSchema,
@@ -26,7 +30,16 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const supabase = getAdminSupabaseClient();
+    const supabase = getServerReadSupabaseClient();
+    if (!supabase) {
+      return NextResponse.json(
+        {
+          error:
+            "Не заданы NEXT_PUBLIC_SUPABASE_URL или NEXT_PUBLIC_SUPABASE_ANON_KEY.",
+        },
+        { status: 500 }
+      );
+    }
     let query = supabase
       .from("projects")
       .select("*")
@@ -54,7 +67,12 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error("Admin projects GET error:", error);
     return NextResponse.json(
-      { error: "Server configuration error" },
+      {
+        error:
+          error instanceof MissingSupabaseConfigError
+            ? error.message
+            : "Server configuration error",
+      },
       { status: 500 }
     );
   }
@@ -121,7 +139,12 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Admin projects POST error:", error);
     return NextResponse.json(
-      { error: "Server configuration error" },
+      {
+        error:
+          error instanceof MissingSupabaseConfigError
+            ? error.message
+            : "Server configuration error",
+      },
       { status: 500 }
     );
   }

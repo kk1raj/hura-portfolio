@@ -177,7 +177,10 @@ export function ProjectsTab({ section }: ProjectsTabProps) {
       title: { ...project.title },
       description: { ...project.description },
       tagsInput: project.tags.join(", "),
-      project_url: project.project_url ?? "",
+      project_url:
+        project.project_url ??
+        (section === "design" ? project.figma_url : null) ??
+        "",
       github_url: project.github_url ?? "",
       figma_url: project.figma_url ?? "",
       open_external_on_click: project.open_external_on_click,
@@ -250,8 +253,9 @@ export function ProjectsTab({ section }: ProjectsTabProps) {
         .map((tag) => tag.trim())
         .filter((tag) => tag.length > 0),
       project_url: form.project_url.trim() || null,
-      github_url: form.github_url.trim() || null,
-      figma_url: form.figma_url.trim() || null,
+      github_url:
+        section === "websites" ? form.github_url.trim() || null : null,
+      figma_url: null,
       open_external_on_click: form.open_external_on_click,
       cover_image: form.cover_image.trim() || null,
       gallery: form.gallery,
@@ -460,7 +464,9 @@ export function ProjectsTab({ section }: ProjectsTabProps) {
 
             <div className="space-y-1">
               <label className="block text-sm font-medium">
-                Теги (через запятую)
+                {section === "design"
+                  ? "Инструменты / Категории"
+                  : "Стек технологий"}
               </label>
               <input
                 type="text"
@@ -468,14 +474,20 @@ export function ProjectsTab({ section }: ProjectsTabProps) {
                 onChange={(event) =>
                   setForm((prev) => ({ ...prev, tagsInput: event.target.value }))
                 }
-                placeholder="UI/UX, Branding, Next.js"
+                placeholder={
+                  section === "design"
+                    ? "Figma, UI/UX, Branding"
+                    : "Next.js, TypeScript, Tailwind"
+                }
                 className="w-full rounded-md border border-neutral-300 dark:border-neutral-700 bg-background px-3 py-2 text-sm"
               />
             </div>
 
             <div className="space-y-1">
               <label className="block text-sm font-medium">
-                Live URL (https://...)
+                {section === "design"
+                  ? "Ссылка на Figma / Behance / Dribbble (необязательно)"
+                  : "Live URL (ссылка на сайт)"}
               </label>
               <input
                 type="url"
@@ -486,46 +498,34 @@ export function ProjectsTab({ section }: ProjectsTabProps) {
                     project_url: event.target.value,
                   }))
                 }
-                placeholder="https://example.com"
+                placeholder={
+                  section === "design"
+                    ? "https://www.figma.com/... или https://www.behance.net/..."
+                    : "https://example.com"
+                }
                 className="w-full rounded-md border border-neutral-300 dark:border-neutral-700 bg-background px-3 py-2 text-sm"
               />
             </div>
 
-            <div className="space-y-1">
-              <label className="block text-sm font-medium">
-                GitHub URL (https://...)
-              </label>
-              <input
-                type="url"
-                value={form.github_url}
-                onChange={(event) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    github_url: event.target.value,
-                  }))
-                }
-                placeholder="https://github.com/username/repo"
-                className="w-full rounded-md border border-neutral-300 dark:border-neutral-700 bg-background px-3 py-2 text-sm"
-              />
-            </div>
-
-            <div className="space-y-1">
-              <label className="block text-sm font-medium">
-                Figma URL (https://...)
-              </label>
-              <input
-                type="url"
-                value={form.figma_url}
-                onChange={(event) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    figma_url: event.target.value,
-                  }))
-                }
-                placeholder="https://www.figma.com/file/..."
-                className="w-full rounded-md border border-neutral-300 dark:border-neutral-700 bg-background px-3 py-2 text-sm"
-              />
-            </div>
+            {section === "websites" && (
+              <div className="space-y-1">
+                <label className="block text-sm font-medium">
+                  GitHub URL (необязательно)
+                </label>
+                <input
+                  type="url"
+                  value={form.github_url}
+                  onChange={(event) =>
+                    setForm((prev) => ({
+                      ...prev,
+                      github_url: event.target.value,
+                    }))
+                  }
+                  placeholder="https://github.com/username/repo"
+                  className="w-full rounded-md border border-neutral-300 dark:border-neutral-700 bg-background px-3 py-2 text-sm"
+                />
+              </div>
+            )}
 
             <div className="space-y-1">
               <label className="block text-sm font-medium">

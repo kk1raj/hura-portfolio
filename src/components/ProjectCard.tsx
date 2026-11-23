@@ -8,23 +8,27 @@ interface ProjectCardProps {
   project: Project;
   locale: Locale;
   viewProjectLabel: string;
-  liveLabel: string;
+  openDesignLabel: string;
+  openWebsiteLabel: string;
   githubLabel: string;
-  figmaLabel: string;
 }
 
 export function ProjectCard({
   project,
   locale,
   viewProjectLabel,
-  liveLabel,
+  openDesignLabel,
+  openWebsiteLabel,
   githubLabel,
-  figmaLabel,
 }: ProjectCardProps) {
   const title = getLocalizedValue(project.title, locale) || project.slug;
   const description = getLocalizedValue(project.description, locale);
+  const primaryExternalUrl =
+    project.section === "design"
+      ? project.project_url || project.figma_url
+      : project.project_url;
   const openExternal =
-    project.open_external_on_click && Boolean(project.project_url);
+    project.open_external_on_click && Boolean(primaryExternalUrl);
   const detailHref = `/projects/${project.slug}`;
 
   const coverNode = project.cover_image ? (
@@ -45,9 +49,9 @@ export function ProjectCard({
   return (
     <article className="flex flex-col justify-between gap-4 rounded-lg border border-neutral-200 dark:border-neutral-800 p-5">
       <div className="space-y-3">
-        {openExternal && project.project_url ? (
+        {openExternal && primaryExternalUrl ? (
           <a
-            href={project.project_url}
+            href={primaryExternalUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="group block"
@@ -61,9 +65,9 @@ export function ProjectCard({
         )}
 
         <div className="space-y-1.5">
-          {openExternal && project.project_url ? (
+          {openExternal && primaryExternalUrl ? (
             <a
-              href={project.project_url}
+              href={primaryExternalUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 text-lg font-medium hover:underline underline-offset-4"
@@ -111,18 +115,22 @@ export function ProjectCard({
         </Link>
 
         <div className="flex flex-wrap items-center gap-3 text-xs font-mono">
-          {project.project_url && (
+          {primaryExternalUrl && (
             <a
-              href={project.project_url}
+              href={primaryExternalUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 underline underline-offset-4 hover:opacity-80"
             >
-              <span>{liveLabel}</span>
+              <span>
+                {project.section === "design"
+                  ? openDesignLabel
+                  : openWebsiteLabel}
+              </span>
               <ExternalLink className="h-3 w-3" aria-hidden="true" />
             </a>
           )}
-          {project.github_url && (
+          {project.section === "websites" && project.github_url && (
             <a
               href={project.github_url}
               target="_blank"
@@ -130,17 +138,6 @@ export function ProjectCard({
               className="inline-flex items-center gap-1 underline underline-offset-4 hover:opacity-80"
             >
               <span>{githubLabel}</span>
-              <ExternalLink className="h-3 w-3" aria-hidden="true" />
-            </a>
-          )}
-          {project.figma_url && (
-            <a
-              href={project.figma_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 underline underline-offset-4 hover:opacity-80"
-            >
-              <span>{figmaLabel}</span>
               <ExternalLink className="h-3 w-3" aria-hidden="true" />
             </a>
           )}

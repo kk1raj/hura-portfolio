@@ -72,14 +72,14 @@ export default async function LocaleLayout({
       <div className="min-h-screen flex flex-col">
         <Header />
 
-        <main className="flex-1 mx-auto w-full max-w-5xl px-4 py-10 print:max-w-none print:p-0">
+        <main className="flex-1 mx-auto w-full max-w-5xl px-4 py-10">
           {children}
         </main>
 
         <section
           id="contact"
           aria-labelledby="contact-heading"
-          className="print:hidden border-t border-neutral-200 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-950/50"
+          className="border-t border-neutral-200 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-950/50"
         >
           <div className="mx-auto max-w-5xl px-4 py-12">
             <div className="grid gap-10 md:grid-cols-2">
@@ -121,7 +121,7 @@ export default async function LocaleLayout({
           </div>
         </section>
 
-        <footer className="print:hidden border-t border-neutral-200 dark:border-neutral-800">
+        <footer className="border-t border-neutral-200 dark:border-neutral-800">
           <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-4 py-6 text-xs text-neutral-500">
             <p>{tFooter("rights")}</p>
             <div className="flex flex-wrap items-center gap-4">

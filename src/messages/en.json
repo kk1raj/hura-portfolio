@@ -11,6 +11,8 @@
     "liveUrl": "Live",
     "githubUrl": "GitHub",
     "figmaUrl": "Figma",
+    "openDesignLink": "View in Figma / Behance",
+    "openWebsiteLink": "Open website",
     "externalLink": "Open external link"
   },
   "nav": {
@@ -45,7 +47,6 @@
     "badge": "Curriculum Vitae",
     "title": "Resume / CV",
     "subtitle": "Professional background, work experience, and core competencies.",
-    "printPdf": "Download / Print PDF",
     "contactsTitle": "Contacts",
     "summaryTitle": "Summary",
     "summaryText": "Designer and full-stack web developer focused on clear systems, clean interfaces, and reliable engineering.",
@@ -73,6 +74,7 @@
   },
   "privacy": {
     "badge": "Legal",
+    "backButton": "Back",
     "title": "Privacy Policy",
     "updatedAt": "Last updated: 2026",
     "intro": "This page explains how contact form submissions, cookies, and technical data are processed in accordance with GDPR/RODO.",

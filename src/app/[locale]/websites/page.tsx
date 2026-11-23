@@ -62,9 +62,9 @@ export default async function WebsitesPage({
               project={project}
               locale={locale}
               viewProjectLabel={t("viewProject")}
-              liveLabel={tCommon("liveUrl")}
+              openDesignLabel={tCommon("openDesignLink")}
+              openWebsiteLabel={tCommon("openWebsiteLink")}
               githubLabel={tCommon("githubUrl")}
-              figmaLabel={tCommon("figmaUrl")}
             />
           ))}
         </div>

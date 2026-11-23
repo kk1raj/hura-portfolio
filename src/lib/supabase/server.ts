@@ -1,13 +1,26 @@
 import "server-only";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
-export function getAdminSupabaseClient(): SupabaseClient {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+export class MissingSupabaseConfigError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "MissingSupabaseConfigError";
+  }
+}
 
-  if (!url || !serviceRoleKey) {
-    throw new Error(
-      "Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY in server environment."
+export function getAdminSupabaseClient(): SupabaseClient {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
+
+  if (!url) {
+    throw new MissingSupabaseConfigError(
+      "Не задан NEXT_PUBLIC_SUPABASE_URL в .env.local или Vercel Environment Variables."
+    );
+  }
+
+  if (!serviceRoleKey) {
+    throw new MissingSupabaseConfigError(
+      "Не задан SUPABASE_SERVICE_ROLE_KEY. Добавьте service_role ключ из Supabase Dashboard (Project Settings → API) в .env.local и Vercel Environment Variables."
     );
   }
 
@@ -20,10 +33,10 @@ export function getAdminSupabaseClient(): SupabaseClient {
 }
 
 export function getServerReadSupabaseClient(): SupabaseClient | null {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
   const key =
-    process.env.SUPABASE_SERVICE_ROLE_KEY ||
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    process.env.SUPABASE_SERVICE_ROLE_KEY?.trim() ||
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim();
 
   if (!url || !key) {
     return null;

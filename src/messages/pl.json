@@ -11,6 +11,8 @@
     "liveUrl": "Live",
     "githubUrl": "GitHub",
     "figmaUrl": "Figma",
+    "openDesignLink": "Zobacz w Figma / Behance",
+    "openWebsiteLink": "Otwórz stronę",
     "externalLink": "Otwórz link"
   },
   "nav": {
@@ -45,7 +47,6 @@
     "badge": "Życiorys",
     "title": "Życiorys / CV",
     "subtitle": "Doświadczenie zawodowe, historia pracy oraz główne kompetencje.",
-    "printPdf": "Pobierz / Drukuj PDF",
     "contactsTitle": "Kontakt",
     "summaryTitle": "Podsumowanie",
     "summaryText": "Projektant oraz programista full-stack skupiony na przejrzystych systemach, czystych interfejsach i solidnej inżynierii.",
@@ -73,6 +74,7 @@
   },
   "privacy": {
     "badge": "Informacje prawne",
+    "backButton": "Wstecz",
     "title": "Polityka prywatności",
     "updatedAt": "Ostatnia aktualizacja: 2026",
     "intro": "Ta strona wyjaśnia zasady przetwarzania zgłoszeń z formularza kontaktowego, plików cookie oraz danych technicznych zgodnie z RODO/GDPR.",

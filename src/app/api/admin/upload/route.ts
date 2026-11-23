@@ -1,7 +1,10 @@
 import { randomUUID } from "crypto";
 import { type NextRequest, NextResponse } from "next/server";
 import { requireAdminRequest } from "@/lib/admin-auth";
-import { getAdminSupabaseClient } from "@/lib/supabase/server";
+import {
+  getAdminSupabaseClient,
+  MissingSupabaseConfigError,
+} from "@/lib/supabase/server";
 
 const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024;
 const BUCKET_NAME = "portfolio-images";
@@ -120,7 +123,12 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Admin upload POST error:", error);
     return NextResponse.json(
-      { error: "Server configuration error" },
+      {
+        error:
+          error instanceof MissingSupabaseConfigError
+            ? error.message
+            : "Server configuration error",
+      },
       { status: 500 }
     );
   }

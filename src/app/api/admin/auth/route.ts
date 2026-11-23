@@ -7,7 +7,7 @@ import {
 } from "@/lib/admin-auth";
 
 const LoginBodySchema = z.object({
-  password: z.string().min(1, "Password is required"),
+  password: z.string().trim().min(1, "Password is required"),
 });
 
 export async function POST(request: Request) {
@@ -26,10 +26,23 @@ export async function POST(request: Request) {
     );
   }
 
-  if (!process.env.ADMIN_PASSWORD || !process.env.ADMIN_JWT_SECRET) {
-    console.error("Admin authentication environment variables are missing.");
+  const missingVars: string[] = [];
+  if (!process.env.ADMIN_PASSWORD?.trim()) {
+    missingVars.push("ADMIN_PASSWORD");
+  }
+  if (!process.env.ADMIN_JWT_SECRET?.trim()) {
+    missingVars.push("ADMIN_JWT_SECRET");
+  }
+
+  if (missingVars.length > 0) {
+    console.error(
+      "Admin authentication environment variables are missing:",
+      missingVars.join(", ")
+    );
     return NextResponse.json(
-      { error: "Admin authentication is not configured" },
+      {
+        error: `Missing environment variables: ${missingVars.join(", ")}`,
+      },
       { status: 500 }
     );
   }
@@ -52,7 +65,10 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("Failed to sign admin JWT:", error);
     return NextResponse.json(
-      { error: "Failed to create session" },
+      {
+        error:
+          error instanceof Error ? error.message : "Failed to create session",
+      },
       { status: 500 }
     );
   }

@@ -47,7 +47,7 @@ export function CopyButton({
       type="button"
       onClick={() => void handleCopy()}
       aria-label={`${copied ? copiedLabel : copyLabel}: ${value}`}
-      className={`print:hidden inline-flex items-center gap-1 rounded border border-neutral-300 dark:border-neutral-700 px-2 py-0.5 text-xs font-medium hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors ${className}`.trim()}
+      className={`inline-flex items-center gap-1 rounded border border-neutral-300 dark:border-neutral-700 px-2 py-0.5 text-xs font-medium hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors ${className}`.trim()}
     >
       {copied ? (
         <Check className="h-3 w-3 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />

@@ -2,7 +2,10 @@ import { revalidatePath } from "next/cache";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { requireAdminRequest } from "@/lib/admin-auth";
-import { getAdminSupabaseClient } from "@/lib/supabase/server";
+import {
+  getAdminSupabaseClient,
+  MissingSupabaseConfigError,
+} from "@/lib/supabase/server";
 import {
   normalizeProjectRow,
   ProjectFormInputSchema,
@@ -88,7 +91,12 @@ export async function PATCH(
   } catch (error) {
     console.error("Admin projects PATCH error:", error);
     return NextResponse.json(
-      { error: "Server configuration error" },
+      {
+        error:
+          error instanceof MissingSupabaseConfigError
+            ? error.message
+            : "Server configuration error",
+      },
       { status: 500 }
     );
   }
@@ -133,7 +141,12 @@ export async function DELETE(
   } catch (error) {
     console.error("Admin projects DELETE error:", error);
     return NextResponse.json(
-      { error: "Server configuration error" },
+      {
+        error:
+          error instanceof MissingSupabaseConfigError
+            ? error.message
+            : "Server configuration error",
+      },
       { status: 500 }
     );
   }

@@ -3,7 +3,10 @@ import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { requireAdminRequest } from "@/lib/admin-auth";
 import { getCvData, getSiteSettings } from "@/lib/data";
-import { getAdminSupabaseClient } from "@/lib/supabase/server";
+import {
+  getAdminSupabaseClient,
+  MissingSupabaseConfigError,
+} from "@/lib/supabase/server";
 import {
   CvDataSchema,
   SiteContentKeySchema,
@@ -101,7 +104,12 @@ export async function PUT(request: NextRequest) {
   } catch (error) {
     console.error("Admin content PUT error:", error);
     return NextResponse.json(
-      { error: "Server configuration error" },
+      {
+        error:
+          error instanceof MissingSupabaseConfigError
+            ? error.message
+            : "Server configuration error",
+      },
       { status: 500 }
     );
   }

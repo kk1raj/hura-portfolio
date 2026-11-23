@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { BackButton } from "@/components/BackButton";
 import { isValidLocale } from "@/i18n/routing";
 import { buildLocalizedMetadata } from "@/lib/seo";
 
@@ -43,6 +44,10 @@ export default async function PrivacyPage({
 
   return (
     <article className="max-w-3xl space-y-8">
+      <div>
+        <BackButton label={t("backButton")} />
+      </div>
+
       <header className="space-y-2 border-b border-dashed border-neutral-300 dark:border-neutral-700 pb-6">
         <p className="font-mono text-xs uppercase tracking-widest text-neutral-500">
           {t("badge")}
@@ -62,6 +67,10 @@ export default async function PrivacyPage({
             <p>{section.text}</p>
           </section>
         ))}
+      </div>
+
+      <div className="border-t border-dashed border-neutral-300 dark:border-neutral-700 pt-6">
+        <BackButton label={t("backButton")} />
       </div>
     </article>
   );

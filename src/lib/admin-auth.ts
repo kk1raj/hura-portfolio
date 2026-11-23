@@ -12,12 +12,13 @@ import {
 export { ADMIN_COOKIE_NAME, verifyAdminJwt };
 
 export function verifyAdminPassword(inputPassword: string): boolean {
-  const expected = process.env.ADMIN_PASSWORD;
-  if (!expected || !inputPassword) {
+  const expected = process.env.ADMIN_PASSWORD?.trim();
+  const normalizedInput = inputPassword.trim();
+  if (!expected || !normalizedInput) {
     return false;
   }
 
-  const inputHash = createHash("sha256").update(inputPassword).digest();
+  const inputHash = createHash("sha256").update(normalizedInput).digest();
   const expectedHash = createHash("sha256").update(expected).digest();
   return timingSafeEqual(inputHash, expectedHash);
 }

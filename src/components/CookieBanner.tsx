@@ -101,7 +101,7 @@ export function CookieBanner() {
   return (
     <aside
       aria-label={t("title")}
-      className="print:hidden fixed inset-x-0 bottom-0 z-50 border-t border-neutral-300 dark:border-neutral-700 bg-background/95 backdrop-blur-sm"
+      className="fixed inset-x-0 bottom-0 z-50 border-t border-neutral-300 dark:border-neutral-700 bg-background/95 backdrop-blur-sm"
     >
       <div className="mx-auto max-w-5xl space-y-4 px-4 py-5">
         <div className="space-y-1">
@@ -109,6 +109,7 @@ export function CookieBanner() {
             <h2 className="text-sm font-semibold">{t("title")}</h2>
             <Link
               href="/privacy"
+              onClick={() => setIsManuallyOpen(false)}
               className="text-xs underline underline-offset-4 text-neutral-600 hover:text-foreground dark:text-neutral-400"
             >
               {t("privacyLink")}

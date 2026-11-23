@@ -122,17 +122,20 @@ export default async function ProjectDetailPage({
   const backLabel =
     project.section === "websites" ? t("backToWebsites") : t("backToDesign");
 
-  const externalLinks = [
-    project.project_url
-      ? { label: tCommon("liveUrl"), href: project.project_url }
-      : null,
-    project.github_url
-      ? { label: tCommon("githubUrl"), href: project.github_url }
-      : null,
-    project.figma_url
-      ? { label: tCommon("figmaUrl"), href: project.figma_url }
-      : null,
-  ].filter((item): item is { label: string; href: string } => item !== null);
+  const primaryDesignUrl = project.project_url || project.figma_url;
+  const externalLinks =
+    project.section === "design"
+      ? primaryDesignUrl
+        ? [{ label: tCommon("openDesignLink"), href: primaryDesignUrl }]
+        : []
+      : [
+          project.project_url
+            ? { label: tCommon("openWebsiteLink"), href: project.project_url }
+            : null,
+          project.github_url
+            ? { label: tCommon("githubUrl"), href: project.github_url }
+            : null,
+        ].filter((item): item is { label: string; href: string } => item !== null);
 
   return (
     <article className="space-y-8">

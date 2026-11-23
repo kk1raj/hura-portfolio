@@ -3,7 +3,7 @@ import { jwtVerify } from "jose";
 export const ADMIN_COOKIE_NAME = "admin_session";
 
 export function getAdminJwtSecretKey(): Uint8Array | null {
-  const secret = process.env.ADMIN_JWT_SECRET;
+  const secret = process.env.ADMIN_JWT_SECRET?.trim();
   if (!secret || secret.length < 16) {
     return null;
   }
