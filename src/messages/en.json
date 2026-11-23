@@ -132,5 +132,23 @@
   },
   "footer": {
     "rights": "Portfolio & CV Foundation"
+  },
+  "landing": {
+    "viewAllWebsites": "View all websites",
+    "viewAllDesign": "View all design works",
+    "abstractWeb1Tag": "01 / WEB ARCHITECTURE",
+    "abstractWeb1Title": "Full-Stack Web Platform",
+    "abstractWeb1Subtitle": "Next.js App Router · TypeScript · Supabase Architecture",
+    "abstractWeb2Tag": "02 / INTERACTIVE SYSTEM",
+    "abstractWeb2Title": "Modular Web Experience",
+    "abstractWeb2Subtitle": "Editorial Grid · Multi-locale Routing · Edge Delivery",
+    "abstractDesign1Tag": "01 / VISUAL DIRECTION",
+    "abstractDesign1Title": "Brand & Visual Identity",
+    "abstractDesign1Subtitle": "Art Direction · Typography · Minimalist Systems",
+    "abstractDesign2Tag": "02 / EDITORIAL INTERFACE",
+    "abstractDesign2Title": "Product & UI/UX Case",
+    "abstractDesign2Subtitle": "Design Systems · Prototyping · Interactive Flows",
+    "liveRotationBadge": "Live showcase · rotates every 60s",
+    "inspectWork": "Inspect work"
   }
 }

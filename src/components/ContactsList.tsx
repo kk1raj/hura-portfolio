@@ -1,4 +1,5 @@
 import { CopyButton } from "@/components/CopyButton";
+import { normalizeHttpHref, normalizeTelegramHref } from "@/lib/contact-links";
 import type { SiteSettings } from "@/types/portfolio";
 
 interface ContactsListProps {
@@ -6,21 +7,6 @@ interface ContactsListProps {
   copyLabel: string;
   copiedLabel: string;
   emptyText?: string;
-}
-
-function normalizeHttpHref(raw: string): string | null {
-  const trimmed = raw.trim();
-  if (!trimmed) return null;
-  if (/^https?:\/\//i.test(trimmed)) return trimmed;
-  return `https://${trimmed}`;
-}
-
-function normalizeTelegramHref(raw: string): string | null {
-  const trimmed = raw.trim();
-  if (!trimmed) return null;
-  if (/^https?:\/\//i.test(trimmed)) return trimmed;
-  const handle = trimmed.replace(/^@/, "");
-  return `https://t.me/${handle}`;
 }
 
 export function ContactsList({

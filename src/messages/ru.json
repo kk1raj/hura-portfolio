@@ -132,5 +132,23 @@
   },
   "footer": {
     "rights": "Основа сайта-портфолио и CV"
+  },
+  "landing": {
+    "viewAllWebsites": "Перейти ко всем веб-сайтам",
+    "viewAllDesign": "Перейти ко всем дизайн-работам",
+    "abstractWeb1Tag": "01 / ВЕБ-АРХИТЕКТУРА",
+    "abstractWeb1Title": "Full-Stack Веб-платформа",
+    "abstractWeb1Subtitle": "Next.js App Router · TypeScript · Supabase Architecture",
+    "abstractWeb2Tag": "02 / ИНТЕРАКТИВНАЯ СИСТЕМА",
+    "abstractWeb2Title": "Модульный Веб-продукт",
+    "abstractWeb2Subtitle": "Editorial Grid · Мультиязычность · Edge Delivery",
+    "abstractDesign1Tag": "01 / ВИЗУАЛЬНОЕ НАПРАВЛЕНИЕ",
+    "abstractDesign1Title": "Брендинг и Айдентика",
+    "abstractDesign1Subtitle": "Арт-дирекшн · Типографика · Минималистичные системы",
+    "abstractDesign2Tag": "02 / EDITORIAL-ИНТЕРФЕЙС",
+    "abstractDesign2Title": "Продуктовый UI/UX Кейс",
+    "abstractDesign2Subtitle": "Дизайн-системы · Прототипирование · Интерактив",
+    "liveRotationBadge": "Живая витрина · автосмена каждые 60с",
+    "inspectWork": "Осмотреть работу"
   }
 }

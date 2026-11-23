@@ -132,5 +132,23 @@
   },
   "footer": {
     "rights": "Fundament Portfolio i CV"
+  },
+  "landing": {
+    "viewAllWebsites": "Zobacz wszystkie strony",
+    "viewAllDesign": "Zobacz wszystkie projekty design",
+    "abstractWeb1Tag": "01 / ARCHITEKTURA WEB",
+    "abstractWeb1Title": "Platforma Full-Stack",
+    "abstractWeb1Subtitle": "Next.js App Router · TypeScript · Supabase Architecture",
+    "abstractWeb2Tag": "02 / SYSTEM INTERAKTYWNY",
+    "abstractWeb2Title": "Modularny Serwis Web",
+    "abstractWeb2Subtitle": "Editorial Grid · Wielojęzyczność · Edge Delivery",
+    "abstractDesign1Tag": "01 / KIERUNEK WIZUALNY",
+    "abstractDesign1Title": "Branding i Identyfikacja",
+    "abstractDesign1Subtitle": "Art Direction · Typografia · Minimalistyczne Systemy",
+    "abstractDesign2Tag": "02 / INTERFEJS EDITORIAL",
+    "abstractDesign2Title": "Studium Produktu UI/UX",
+    "abstractDesign2Subtitle": "Design Systems · Prototypowanie · Interakcje",
+    "liveRotationBadge": "Żywa witryna · zmiana co 60s",
+    "inspectWork": "Obejrzyj projekt"
   }
 }

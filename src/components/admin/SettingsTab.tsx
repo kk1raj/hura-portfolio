@@ -30,7 +30,7 @@ export function SettingsTab() {
           return;
         }
         if (!cancelled && data.settings) {
-          setSettings(data.settings);
+          setSettings({ ...DEFAULT_SITE_SETTINGS, ...data.settings });
         }
       } catch {
         if (!cancelled) setError("Сетевая ошибка при загрузке настроек");
@@ -109,6 +109,38 @@ export function SettingsTab() {
           />
           <span>Available for work</span>
         </label>
+      </div>
+
+      <div className="space-y-4 rounded-lg border border-neutral-200 dark:border-neutral-800 p-5">
+        <h2 className="text-base font-semibold">Профиль</h2>
+
+        <div className="space-y-1">
+          <label className="block text-sm font-medium">
+            Имя / Фамилия (на сайте)
+          </label>
+          <input
+            type="text"
+            value={settings.fullName}
+            onChange={(event) =>
+              setSettings((prev) => ({ ...prev, fullName: event.target.value }))
+            }
+            placeholder="Hurakassi"
+            className="w-full rounded-md border border-neutral-300 dark:border-neutral-700 bg-background px-3 py-2 text-sm"
+          />
+        </div>
+
+        <div className="space-y-1">
+          <label className="block text-sm font-medium">Никнейм / Handle</label>
+          <input
+            type="text"
+            value={settings.nickname}
+            onChange={(event) =>
+              setSettings((prev) => ({ ...prev, nickname: event.target.value }))
+            }
+            placeholder="kk1raj"
+            className="w-full rounded-md border border-neutral-300 dark:border-neutral-700 bg-background px-3 py-2 text-sm"
+          />
+        </div>
       </div>
 
       <div className="space-y-4 rounded-lg border border-neutral-200 dark:border-neutral-800 p-5">

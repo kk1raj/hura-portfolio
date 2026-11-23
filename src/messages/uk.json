@@ -132,5 +132,23 @@
   },
   "footer": {
     "rights": "Основа сайту-портфоліо та CV"
+  },
+  "landing": {
+    "viewAllWebsites": "Перейти до всіх вебсайтів",
+    "viewAllDesign": "Перейти до всіх дизайн-робіт",
+    "abstractWeb1Tag": "01 / ВЕБАРХІТЕКТУРА",
+    "abstractWeb1Title": "Full-Stack Вебплатформа",
+    "abstractWeb1Subtitle": "Next.js App Router · TypeScript · Supabase Architecture",
+    "abstractWeb2Tag": "02 / ІНТЕРАКТИВНА СИСТЕМА",
+    "abstractWeb2Title": "Модульний Вебпродукт",
+    "abstractWeb2Subtitle": "Editorial Grid · Мультимовний роутинг · Edge Delivery",
+    "abstractDesign1Tag": "01 / ВІЗУАЛЬНИЙ НАПРЯМ",
+    "abstractDesign1Title": "Брендинг та Айдентика",
+    "abstractDesign1Subtitle": "Арт-дирекшн · Типографіка · Мінімалістичні системи",
+    "abstractDesign2Tag": "02 / EDITORIAL-ІНТЕРФЕЙС",
+    "abstractDesign2Title": "Продуктовий UI/UX Кейс",
+    "abstractDesign2Subtitle": "Дизайн-системи · Прототипування · Інтерактив",
+    "liveRotationBadge": "Жива вітрина · автозміна кожні 60с",
+    "inspectWork": "Оглянути роботу"
   }
 }

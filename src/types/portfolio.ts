@@ -108,6 +108,8 @@ export const DEFAULT_CV_DATA: CvData = {
 };
 
 export const SiteSettingsSchema = z.object({
+  fullName: z.string().default("Hurakassi"),
+  nickname: z.string().default("kk1raj"),
   availableForWork: z.boolean(),
   telegram: z.string(),
   email: z.string(),
@@ -117,6 +119,8 @@ export const SiteSettingsSchema = z.object({
 export type SiteSettings = z.infer<typeof SiteSettingsSchema>;
 
 export const DEFAULT_SITE_SETTINGS: SiteSettings = {
+  fullName: "Hurakassi",
+  nickname: "kk1raj",
   availableForWork: true,
   telegram: "",
   email: "",
