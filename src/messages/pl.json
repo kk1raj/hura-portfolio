@@ -3,6 +3,16 @@
     "title": "Portfolio i CV",
     "description": "Portfolio projektowe, realizacje webowe oraz CV."
   },
+  "common": {
+    "copy": "Kopiuj",
+    "copied": "Skopiowano",
+    "availableForWork": "Dostępny do współpracy",
+    "unavailableForWork": "Obecnie zajęty",
+    "liveUrl": "Live",
+    "githubUrl": "GitHub",
+    "figmaUrl": "Figma",
+    "externalLink": "Otwórz link"
+  },
   "nav": {
     "brand": "Portfolio",
     "design": "Design",
@@ -17,7 +27,7 @@
     "badge": "Portfolio projektowe",
     "title": "Projekty Design",
     "subtitle": "Wybrane realizacje z zakresu projektowania wizualnego, brandingu oraz UI/UX.",
-    "emptyState": "Projekty design z bazy danych pojawią się tutaj.",
+    "emptyState": "Projekty design pojawią się tutaj po dodaniu w /admin.",
     "sampleProjectTitle": "Studium przypadku Design (Wireframe)",
     "sampleProjectSummary": "Przykładowy wpis projektu design przed podłączeniem bazy danych Supabase.",
     "viewProject": "Zobacz projekt"
@@ -26,7 +36,7 @@
     "badge": "Tworzenie stron",
     "title": "Strony i aplikacje",
     "subtitle": "Aplikacje webowe full-stack, strony firmowe oraz interaktywne realizacje.",
-    "emptyState": "Projekty stron internetowych z bazy danych pojawią się tutaj.",
+    "emptyState": "Projekty stron pojawią się tutaj po dodaniu w /admin.",
     "sampleProjectTitle": "Platforma webowa (Wireframe)",
     "sampleProjectSummary": "Przykładowy wpis projektu strony przed podłączeniem bazy danych Supabase.",
     "viewProject": "Zobacz projekt"
@@ -35,12 +45,18 @@
     "badge": "Życiorys",
     "title": "Życiorys / CV",
     "subtitle": "Doświadczenie zawodowe, historia pracy oraz główne kompetencje.",
+    "printPdf": "Pobierz / Drukuj PDF",
+    "contactsTitle": "Kontakt",
     "summaryTitle": "Podsumowanie",
     "summaryText": "Projektant oraz programista full-stack skupiony na przejrzystych systemach, czystych interfejsach i solidnej inżynierii.",
     "experienceTitle": "Doświadczenie",
     "experiencePlaceholder": "Wpisy doświadczenia zawodowego zarządzane w panelu admina pojawią się tutaj.",
     "skillsTitle": "Umiejętności i technologie",
-    "skillsPlaceholder": "Narzędzia projektowe, Next.js, TypeScript, Tailwind CSS, Supabase."
+    "skillsPlaceholder": "Narzędzia projektowe, Next.js, TypeScript, Tailwind CSS, Supabase.",
+    "educationTitle": "Edukacja",
+    "educationEmpty": "Wpisy o edukacji dodane w /admin pojawią się tutaj.",
+    "languagesTitle": "Języki",
+    "languagesEmpty": "Znajomość języków dodana w /admin pojawi się tutaj."
   },
   "projectDetail": {
     "badge": "Szczegóły projektu",
@@ -48,29 +64,69 @@
     "backToWebsites": "Powrót do Websites",
     "slugLabel": "Slug projektu",
     "overviewTitle": "Opis projektu",
-    "overviewPlaceholder": "Szczegółowa treść, galeria mediów oraz metadane będą pobierane dynamicznie z Supabase po slug."
+    "overviewPlaceholder": "Szczegółowa treść, galeria mediów oraz metadane będą pobierane dynamicznie z Supabase po slug.",
+    "galleryTitle": "Galeria",
+    "tagsTitle": "Tagi i technologie",
+    "linksTitle": "Linki projektu",
+    "notFoundTitle": "Nie znaleziono projektu",
+    "notFoundDescription": "Ten projekt nie istnieje lub nie został jeszcze opublikowany."
   },
   "privacy": {
     "badge": "Informacje prawne",
     "title": "Polityka prywatności",
     "updatedAt": "Ostatnia aktualizacja: 2026",
-    "intro": "Ta strona wyjaśnia sposób przetwarzania zgłoszeń z formularza kontaktowego oraz podstawowych danych technicznych.",
+    "intro": "Ta strona wyjaśnia zasady przetwarzania zgłoszeń z formularza kontaktowego, plików cookie oraz danych technicznych zgodnie z RODO/GDPR.",
     "dataCollectionTitle": "Zbieranie danych",
-    "dataCollectionText": "Informacje przesłane przez formularz kontaktowy (imię, email i wiadomość) służą wyłącznie do udzielenia odpowiedzi.",
+    "dataCollectionText": "Informacje przesłane przez formularz kontaktowy (imię, kontakt, temat i wiadomość) służą wyłącznie do udzielenia odpowiedzi.",
+    "telegramTitle": "Dostarczanie wiadomości przez Telegram",
+    "telegramText": "Zgłoszenia z formularza są przekazywane bezpośrednio do właściciela strony za pośrednictwem prywatnego bota Telegram i nie są udostępniane osobom trzecim.",
+    "cookiesTitle": "Pliki Cookie i kategorie zgody",
+    "cookiesText": "Stosujemy niezbędne pliki pamięci do działania strony i zapisania preferencji zgody oraz opcjonalną analitykę wyłącznie po jej włączeniu.",
+    "rightsTitle": "Twoje prawa (RODO / GDPR)",
+    "rightsText": "Masz prawo do dostępu, sprostowania lub usunięcia przesłanych danych kontaktowych.",
     "contactTitle": "Kontakt i wnioski dotyczące danych",
     "contactText": "Aby zaktualizować lub usunąć przesłane dane, skontaktuj się poprzez sekcję kontaktową."
   },
   "contact": {
     "title": "Kontakt",
     "subtitle": "Wyślij wiadomość lub zapytanie o projekt.",
+    "directLinksTitle": "Bezpośredni kontakt",
+    "noDirectContacts": "Bezpośrednie kontakty pojawią się tutaj po skonfigurowaniu w /admin Settings.",
     "nameLabel": "Imię",
     "namePlaceholder": "Twoje imię",
     "emailLabel": "Email",
     "emailPlaceholder": "you@example.com",
+    "contactFieldLabel": "Kontakt (Email lub Telegram)",
+    "contactFieldPlaceholder": "@username lub you@example.com",
+    "topicLabel": "Temat",
+    "topicDesign": "Projekt Design",
+    "topicWebsite": "Strona / Aplikacja webowa",
+    "topicJob": "Praca / Współpraca",
+    "topicOther": "Inne",
     "messageLabel": "Wiadomość",
     "messagePlaceholder": "Opisz swój projekt...",
+    "consentText": "Wyrażam zgodę na przetwarzanie moich danych zgodnie z",
+    "consentLink": "Polityką prywatności",
     "submitButton": "Wyślij wiadomość",
-    "note": "Szkic wireframe: wysyłka przez Telegram API zostanie podłączona na etapie backendu."
+    "submittingButton": "Wysyłanie...",
+    "successMessage": "Wiadomość została wysłana. Odpowiem wkrótce.",
+    "errorGeneric": "Nie udało się wysłać wiadomości. Spróbuj później lub użyj bezpośredniego kontaktu.",
+    "errorRateLimit": "Zbyt wiele wiadomości. Odczekaj 10 minut przed kolejną próbą.",
+    "errorValidation": "Wypełnij wszystkie wymagane pola i zaakceptuj politykę prywatności.",
+    "note": "Wiadomości są dostarczane bezpośrednio przez Telegram Bot API."
+  },
+  "cookies": {
+    "title": "Ustawienia plików Cookie",
+    "description": "Używamy niezbędnych plików cookie do działania strony oraz opcjonalnej analityki w celu ulepszania portfolio.",
+    "necessaryTitle": "Niezbędne",
+    "necessaryDesc": "Wymagane do działania nawigacji, obsługi języków i zapisania Twoich preferencji cookie.",
+    "analyticsTitle": "Analityka",
+    "analyticsDesc": "Opcjonalne, zbiorcze statystyki odwiedzin strony.",
+    "acceptAll": "Akceptuj wszystkie",
+    "necessaryOnly": "Tylko niezbędne",
+    "savePreferences": "Zapisz wybór",
+    "privacyLink": "Polityka prywatności",
+    "footerTrigger": "Ustawienia Cookie"
   },
   "footer": {
     "rights": "Fundament Portfolio i CV"

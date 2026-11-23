@@ -3,6 +3,16 @@
     "title": "Portfolio & CV",
     "description": "Design portfolio, web development projects, and curriculum vitae."
   },
+  "common": {
+    "copy": "Copy",
+    "copied": "Copied",
+    "availableForWork": "Available for work",
+    "unavailableForWork": "Currently booked",
+    "liveUrl": "Live",
+    "githubUrl": "GitHub",
+    "figmaUrl": "Figma",
+    "externalLink": "Open external link"
+  },
   "nav": {
     "brand": "Portfolio",
     "design": "Design",
@@ -17,7 +27,7 @@
     "badge": "Design Portfolio",
     "title": "Design Works",
     "subtitle": "Selected visual design, branding, and UI/UX case studies.",
-    "emptyState": "Design projects from the database will appear here.",
+    "emptyState": "Design projects from the database will appear here once added in /admin.",
     "sampleProjectTitle": "Design Case Study (Wireframe)",
     "sampleProjectSummary": "Placeholder entry representing a design portfolio item before connecting Supabase data.",
     "viewProject": "View project"
@@ -26,7 +36,7 @@
     "badge": "Web Development",
     "title": "Websites & Apps",
     "subtitle": "Full-stack web applications, marketing sites, and interactive builds.",
-    "emptyState": "Website projects from the database will appear here.",
+    "emptyState": "Website projects from the database will appear here once added in /admin.",
     "sampleProjectTitle": "Web Platform (Wireframe)",
     "sampleProjectSummary": "Placeholder entry representing a website project before connecting Supabase data.",
     "viewProject": "View project"
@@ -35,12 +45,18 @@
     "badge": "Curriculum Vitae",
     "title": "Resume / CV",
     "subtitle": "Professional background, work experience, and core competencies.",
+    "printPdf": "Download / Print PDF",
+    "contactsTitle": "Contacts",
     "summaryTitle": "Summary",
     "summaryText": "Designer and full-stack web developer focused on clear systems, clean interfaces, and reliable engineering.",
     "experienceTitle": "Experience",
     "experiencePlaceholder": "Work history entries managed via the admin panel will render here.",
     "skillsTitle": "Skills & Stack",
-    "skillsPlaceholder": "Design tools, Next.js, TypeScript, Tailwind CSS, Supabase."
+    "skillsPlaceholder": "Design tools, Next.js, TypeScript, Tailwind CSS, Supabase.",
+    "educationTitle": "Education",
+    "educationEmpty": "Education entries added in /admin will appear here.",
+    "languagesTitle": "Languages",
+    "languagesEmpty": "Language proficiency entries added in /admin will appear here."
   },
   "projectDetail": {
     "badge": "Project Details",
@@ -48,29 +64,69 @@
     "backToWebsites": "Back to Websites",
     "slugLabel": "Project slug",
     "overviewTitle": "Project Overview",
-    "overviewPlaceholder": "Detailed project content, media gallery, and metadata will load dynamically from Supabase by slug."
+    "overviewPlaceholder": "Detailed project content, media gallery, and metadata will load dynamically from Supabase by slug.",
+    "galleryTitle": "Gallery",
+    "tagsTitle": "Tags & Stack",
+    "linksTitle": "Project Links",
+    "notFoundTitle": "Project not found",
+    "notFoundDescription": "This project does not exist or has not been published yet."
   },
   "privacy": {
     "badge": "Legal",
     "title": "Privacy Policy",
     "updatedAt": "Last updated: 2026",
-    "intro": "This page explains how contact form submissions and basic technical data are handled on this portfolio website.",
+    "intro": "This page explains how contact form submissions, cookies, and technical data are processed in accordance with GDPR/RODO.",
     "dataCollectionTitle": "Data Collection",
-    "dataCollectionText": "Information submitted through the contact form (name, email, and message) is used solely to respond to your inquiry.",
+    "dataCollectionText": "Information submitted through the contact form (name, contact details, topic, and message) is used solely to respond to your inquiry.",
+    "telegramTitle": "Message Delivery via Telegram",
+    "telegramText": "Contact form inquiries are forwarded directly to the portfolio owner via a private Telegram bot integration for timely response and are not shared with third parties.",
+    "cookiesTitle": "Cookies & Consent Categories",
+    "cookiesText": "We use strictly necessary storage to remember your consent preferences and essential site functionality, and optional analytics cookies only if you explicitly enable them.",
+    "rightsTitle": "Your Rights (GDPR / RODO)",
+    "rightsText": "You have the right to request access, correction, or deletion of any personal inquiry details you have sent.",
     "contactTitle": "Contact & Data Requests",
     "contactText": "If you would like your inquiry details deleted or updated, please reach out via the contact section."
   },
   "contact": {
     "title": "Get in Touch",
     "subtitle": "Send a direct inquiry or project request.",
+    "directLinksTitle": "Direct Contacts",
+    "noDirectContacts": "Direct contacts will appear here once configured in /admin Settings.",
     "nameLabel": "Name",
     "namePlaceholder": "Your name",
     "emailLabel": "Email",
     "emailPlaceholder": "you@example.com",
+    "contactFieldLabel": "Contact (Email or Telegram)",
+    "contactFieldPlaceholder": "@username or you@example.com",
+    "topicLabel": "Topic",
+    "topicDesign": "Design Project",
+    "topicWebsite": "Website / Web App",
+    "topicJob": "Job / Collaboration",
+    "topicOther": "Other",
     "messageLabel": "Message",
     "messagePlaceholder": "Tell me about your project...",
+    "consentText": "I agree to the processing of my contact details in accordance with the",
+    "consentLink": "Privacy Policy",
     "submitButton": "Send message",
-    "note": "Wireframe placeholder: Telegram API submission will be wired in the backend stage."
+    "submittingButton": "Sending...",
+    "successMessage": "Message sent successfully. I will reply soon.",
+    "errorGeneric": "Failed to send message. Please try again later or use direct contacts.",
+    "errorRateLimit": "Too many messages sent. Please wait 10 minutes before trying again.",
+    "errorValidation": "Please fill in all required fields and accept the privacy policy.",
+    "note": "Messages are delivered directly via the Telegram Bot API."
+  },
+  "cookies": {
+    "title": "Cookie Settings",
+    "description": "We use essential cookies for core site operation and optional analytics cookies to improve the portfolio.",
+    "necessaryTitle": "Necessary",
+    "necessaryDesc": "Required for basic site navigation, language routing, and saving your cookie preferences.",
+    "analyticsTitle": "Analytics",
+    "analyticsDesc": "Optional aggregated statistics to understand portfolio visits.",
+    "acceptAll": "Accept all",
+    "necessaryOnly": "Necessary only",
+    "savePreferences": "Save preferences",
+    "privacyLink": "Privacy Policy",
+    "footerTrigger": "Cookie settings"
   },
   "footer": {
     "rights": "Portfolio & CV Foundation"

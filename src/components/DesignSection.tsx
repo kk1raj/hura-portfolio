@@ -1,10 +1,16 @@
 import { getTranslations } from "next-intl/server";
 import { ArrowRight } from "lucide-react";
+import { ProjectCard } from "@/components/ProjectCard";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
+import { getProjectsBySection } from "@/lib/data";
 
 export async function DesignSection({ locale }: { locale: Locale }) {
-  const t = await getTranslations({ locale, namespace: "design" });
+  const [t, tCommon, projects] = await Promise.all([
+    getTranslations({ locale, namespace: "design" }),
+    getTranslations({ locale, namespace: "common" }),
+    getProjectsBySection("design"),
+  ]);
 
   return (
     <section className="space-y-8">
@@ -18,30 +24,46 @@ export async function DesignSection({ locale }: { locale: Locale }) {
         </p>
       </header>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <article className="flex flex-col justify-between gap-4 rounded-lg border border-neutral-200 dark:border-neutral-800 p-5">
-          <div className="space-y-3">
-            <div className="aspect-video w-full rounded border border-dashed border-neutral-300 dark:border-neutral-700 bg-neutral-100/50 dark:bg-neutral-900/50" />
-            <h2 className="text-lg font-medium">{t("sampleProjectTitle")}</h2>
-            <p className="text-sm text-neutral-600 dark:text-neutral-400">
-              {t("sampleProjectSummary")}
-            </p>
-          </div>
-          <div>
-            <Link
-              href="/projects/design-case-study"
-              className="inline-flex items-center gap-1.5 text-sm font-medium underline underline-offset-4 hover:opacity-80"
-            >
-              <span>{t("viewProject")}</span>
-              <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-            </Link>
-          </div>
-        </article>
-
-        <div className="flex items-center justify-center rounded-lg border border-dashed border-neutral-300 dark:border-neutral-700 p-5 text-center">
-          <p className="text-sm text-neutral-500">{t("emptyState")}</p>
+      {projects.length > 0 ? (
+        <div className="grid gap-6 sm:grid-cols-2">
+          {projects.map((project) => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              locale={locale}
+              viewProjectLabel={t("viewProject")}
+              liveLabel={tCommon("liveUrl")}
+              githubLabel={tCommon("githubUrl")}
+              figmaLabel={tCommon("figmaUrl")}
+            />
+          ))}
         </div>
-      </div>
+      ) : (
+        <div className="grid gap-4 sm:grid-cols-2">
+          <article className="flex flex-col justify-between gap-4 rounded-lg border border-neutral-200 dark:border-neutral-800 p-5">
+            <div className="space-y-3">
+              <div className="aspect-video w-full rounded border border-dashed border-neutral-300 dark:border-neutral-700 bg-neutral-100/50 dark:bg-neutral-900/50" />
+              <h2 className="text-lg font-medium">{t("sampleProjectTitle")}</h2>
+              <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                {t("sampleProjectSummary")}
+              </p>
+            </div>
+            <div>
+              <Link
+                href="/projects/design-case-study"
+                className="inline-flex items-center gap-1.5 text-sm font-medium underline underline-offset-4 hover:opacity-80"
+              >
+                <span>{t("viewProject")}</span>
+                <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+              </Link>
+            </div>
+          </article>
+
+          <div className="flex items-center justify-center rounded-lg border border-dashed border-neutral-300 dark:border-neutral-700 p-5 text-center">
+            <p className="text-sm text-neutral-500">{t("emptyState")}</p>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

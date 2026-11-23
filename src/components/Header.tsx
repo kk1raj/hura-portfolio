@@ -40,7 +40,7 @@ export function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="border-b border-neutral-200 dark:border-neutral-800 bg-background">
+    <header className="print:hidden border-b border-neutral-200 dark:border-neutral-800 bg-background">
       <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-4 py-4">
         <div className="flex flex-wrap items-center gap-6">
           <Link
