@@ -587,7 +587,7 @@ export function ProjectsTab({ section }: ProjectsTabProps) {
                 <span>{isUploading ? "Загрузка..." : "Загрузить обложку"}</span>
                 <input
                   type="file"
-                  accept="image/jpeg,image/png,image/webp"
+                  accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
                   disabled={isUploading}
                   onChange={handleCoverUpload}
                   className="hidden"
@@ -630,7 +630,7 @@ export function ProjectsTab({ section }: ProjectsTabProps) {
               <input
                 type="file"
                 multiple
-                accept="image/jpeg,image/png,image/webp"
+                accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
                 disabled={isUploading}
                 onChange={handleGalleryUpload}
                 className="hidden"

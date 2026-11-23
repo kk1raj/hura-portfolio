@@ -81,30 +81,30 @@ export default async function LocaleLayout({
           aria-labelledby="contact-heading"
           className="border-t border-neutral-200 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-950/50"
         >
-          <div className="mx-auto max-w-5xl px-4 py-12">
-            <div className="grid gap-10 md:grid-cols-2">
-              <div className="space-y-5">
-                <div className="space-y-2">
+          <div className="mx-auto max-w-5xl px-4 py-6">
+            <div className="grid items-start gap-6 md:grid-cols-[1fr_1.4fr]">
+              <div className="space-y-3">
+                <div className="space-y-1">
                   <div className="flex flex-wrap items-center gap-2">
                     <h2
                       id="contact-heading"
-                      className="text-xl font-semibold tracking-tight"
+                      className="text-base font-semibold tracking-tight"
                     >
                       {tContact("title")}
                     </h2>
-                    <span className="rounded border border-neutral-300 dark:border-neutral-700 px-2 py-0.5 text-xs font-medium">
+                    <span className="rounded border border-neutral-300 dark:border-neutral-700 px-2 py-0.5 text-[11px] font-medium">
                       {settings.availableForWork
                         ? tCommon("availableForWork")
                         : tCommon("unavailableForWork")}
                     </span>
                   </div>
-                  <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                  <p className="text-xs text-neutral-600 dark:text-neutral-400">
                     {tContact("subtitle")}
                   </p>
                 </div>
 
-                <div className="space-y-2 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-background p-4">
-                  <h3 className="font-mono text-xs uppercase tracking-wider text-neutral-500">
+                <div className="space-y-1.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-background p-3">
+                  <h3 className="font-mono text-[11px] uppercase tracking-wider text-neutral-500">
                     {tContact("directLinksTitle")}
                   </h3>
                   <ContactsList

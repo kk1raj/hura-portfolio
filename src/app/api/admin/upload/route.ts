@@ -6,13 +6,15 @@ import {
   MissingSupabaseConfigError,
 } from "@/lib/supabase/server";
 
-const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024;
+const MAX_FILE_SIZE_BYTES = 50 * 1024 * 1024;
 const BUCKET_NAME = "portfolio-images";
 
 const MIME_TO_EXTENSION: Record<string, string> = {
   "image/jpeg": "jpg",
   "image/png": "png",
   "image/webp": "webp",
+  "image/gif": "gif",
+  "image/avif": "avif",
 };
 
 function hasValidImageSignature(bytes: Uint8Array, mimeType: string): boolean {
@@ -53,6 +55,31 @@ function hasValidImageSignature(bytes: Uint8Array, mimeType: string): boolean {
     );
   }
 
+  if (mimeType === "image/gif") {
+    return (
+      bytes.length >= 4 &&
+      bytes[0] === 0x47 &&
+      bytes[1] === 0x49 &&
+      bytes[2] === 0x46 &&
+      bytes[3] === 0x38
+    );
+  }
+
+  if (mimeType === "image/avif") {
+    if (bytes.length < 12) return false;
+    const ftyp = String.fromCharCode(
+      bytes[4],
+      bytes[5],
+      bytes[6],
+      bytes[7],
+      bytes[8],
+      bytes[9],
+      bytes[10],
+      bytes[11]
+    );
+    return ftyp === "ftypavif" || ftyp === "ftypavis";
+  }
+
   return false;
 }
 
@@ -77,7 +104,7 @@ export async function POST(request: NextRequest) {
 
   if (file.size <= 0 || file.size > MAX_FILE_SIZE_BYTES) {
     return NextResponse.json(
-      { error: "File size must be between 1 byte and 5 MB" },
+      { error: "Размер файла должен быть от 1 байта до 50 МБ" },
       { status: 400 }
     );
   }
@@ -85,7 +112,7 @@ export async function POST(request: NextRequest) {
   const ext = MIME_TO_EXTENSION[file.type];
   if (!ext) {
     return NextResponse.json(
-      { error: "Only JPG, PNG, and WebP images are allowed" },
+      { error: "Разрешены только изображения JPG, PNG, WebP, GIF и AVIF" },
       { status: 400 }
     );
   }
@@ -94,7 +121,7 @@ export async function POST(request: NextRequest) {
   const bytes = new Uint8Array(arrayBuffer);
   if (!hasValidImageSignature(bytes, file.type)) {
     return NextResponse.json(
-      { error: "File contents do not match an allowed image format" },
+      { error: "Содержимое файла не соответствует формату изображения" },
       { status: 400 }
     );
   }
@@ -113,7 +140,7 @@ export async function POST(request: NextRequest) {
     if (uploadError) {
       console.error("Supabase Storage upload failed:", uploadError.message);
       return NextResponse.json(
-        { error: "Failed to upload image" },
+        { error: "Не удалось загрузить изображение в Storage" },
         { status: 500 }
       );
     }

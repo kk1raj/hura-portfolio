@@ -114,8 +114,8 @@ values (
   'portfolio-images',
   'portfolio-images',
   true,
-  5242880,
-  array['image/jpeg', 'image/png', 'image/webp']
+  52428800,
+  array['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif']
 )
 on conflict (id) do update
 set
@@ -129,3 +129,22 @@ create policy "Public read portfolio images"
   for select
   to anon, authenticated
   using (bucket_id = 'portfolio-images');
+
+-- Optional verified server-admin policies when using anon key + x-portfolio-admin-secret header
+-- Replace <SHA256_HEX_OF_ADMIN_JWT_SECRET> with SHA-256 hex digest of ADMIN_JWT_SECRET
+create or replace function public.is_server_admin_request()
+returns boolean
+language sql
+stable
+as $$
+  select encode(
+    extensions.digest(
+      coalesce(
+        (current_setting('request.headers', true)::json->>'x-portfolio-admin-secret'),
+        ''
+      ),
+      'sha256'
+    ),
+    'hex'
+  ) = '<SHA256_HEX_OF_ADMIN_JWT_SECRET>';
+$$;

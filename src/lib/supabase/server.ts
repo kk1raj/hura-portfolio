@@ -11,24 +11,29 @@ export class MissingSupabaseConfigError extends Error {
 export function getAdminSupabaseClient(): SupabaseClient {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim();
+  const key = serviceRoleKey || anonKey;
 
-  if (!url) {
+  if (!url || !key) {
     throw new MissingSupabaseConfigError(
-      "Не задан NEXT_PUBLIC_SUPABASE_URL в .env.local или Vercel Environment Variables."
+      "Не заданы NEXT_PUBLIC_SUPABASE_URL или ключи Supabase в .env.local / Vercel Environment Variables."
     );
   }
 
-  if (!serviceRoleKey) {
-    throw new MissingSupabaseConfigError(
-      "Не задан SUPABASE_SERVICE_ROLE_KEY. Добавьте service_role ключ из Supabase Dashboard (Project Settings → API) в .env.local и Vercel Environment Variables."
-    );
-  }
+  const adminSecret = process.env.ADMIN_JWT_SECRET?.trim() ?? "";
 
-  return createClient(url, serviceRoleKey, {
+  return createClient(url, key, {
     auth: {
       persistSession: false,
       autoRefreshToken: false,
     },
+    global: serviceRoleKey
+      ? undefined
+      : {
+          headers: {
+            "x-portfolio-admin-secret": adminSecret,
+          },
+        },
   });
 }
 

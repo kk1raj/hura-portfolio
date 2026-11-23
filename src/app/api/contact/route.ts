@@ -93,10 +93,51 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429 });
   }
 
-  const botToken = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
-  if (!botToken || !chatId) {
-    console.error("Telegram contact configuration is missing on the server.");
+  const botToken = process.env.TELEGRAM_BOT_TOKEN?.trim();
+  if (!botToken) {
+    console.error("TELEGRAM_BOT_TOKEN is missing on the server.");
+    return NextResponse.json(
+      { error: "Contact delivery is not configured" },
+      { status: 500 }
+    );
+  }
+
+  let chatId = process.env.TELEGRAM_CHAT_ID?.trim() || null;
+  if (!chatId) {
+    try {
+      const updatesResponse = await fetch(
+        `https://api.telegram.org/bot${botToken}/getUpdates`,
+        { signal: AbortSignal.timeout(8000) }
+      );
+      const updatesData = (await updatesResponse.json().catch(() => null)) as {
+        ok?: boolean;
+        result?: Array<{
+          message?: { chat?: { id?: number | string } };
+          edited_message?: { chat?: { id?: number | string } };
+          my_chat_member?: { chat?: { id?: number | string } };
+        }>;
+      } | null;
+
+      if (updatesData?.ok && Array.isArray(updatesData.result)) {
+        for (let i = updatesData.result.length - 1; i >= 0; i--) {
+          const item = updatesData.result[i];
+          const foundId =
+            item?.message?.chat?.id ??
+            item?.edited_message?.chat?.id ??
+            item?.my_chat_member?.chat?.id;
+          if (foundId !== undefined && foundId !== null) {
+            chatId = String(foundId);
+            break;
+          }
+        }
+      }
+    } catch {
+      // Fallback lookup failed; handled below
+    }
+  }
+
+  if (!chatId) {
+    console.error("TELEGRAM_CHAT_ID is missing and could not be resolved.");
     return NextResponse.json(
       { error: "Contact delivery is not configured" },
       { status: 500 }

@@ -7,18 +7,16 @@ import { LOCALES, type Locale } from "@/i18n/routing";
 
 interface NavTab {
   key: "design" | "websites" | "cv";
-  href: "/" | "/websites" | "/cv";
+  href: "/design" | "/websites" | "/cv";
   isActive: (pathname: string) => boolean;
 }
 
 const NAV_TABS: readonly NavTab[] = [
   {
     key: "design",
-    href: "/",
+    href: "/design",
     isActive: (pathname) =>
-      pathname === "/" ||
-      pathname === "/design" ||
-      pathname.startsWith("/design/"),
+      pathname === "/design" || pathname.startsWith("/design/"),
   },
   {
     key: "websites",
@@ -38,14 +36,20 @@ export function Header() {
   const t = useTranslations("nav");
   const currentLocale = useLocale() as Locale;
   const pathname = usePathname();
+  const isHomeActive = pathname === "/";
 
   return (
     <header className="border-b border-neutral-200 dark:border-neutral-800 bg-background">
       <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-4 py-4">
-        <div className="flex flex-wrap items-center gap-6">
+        <div className="flex flex-wrap items-center gap-4">
           <Link
             href="/"
-            className="text-sm font-semibold uppercase tracking-wider text-foreground"
+            aria-current={isHomeActive ? "page" : undefined}
+            className={
+              isHomeActive
+                ? "rounded px-3 py-1.5 text-sm font-semibold uppercase tracking-wider bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900"
+                : "rounded px-2 py-1.5 text-sm font-semibold uppercase tracking-wider text-foreground hover:bg-neutral-100 dark:hover:bg-neutral-900"
+            }
           >
             {t("brand")}
           </Link>
