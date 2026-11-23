@@ -65,11 +65,7 @@ export function LandingDesignShowcase({
     | { kind: "abstract"; item: AbstractShowcaseItem; index: number }
   > = [0, 1].map((slotIndex) => {
     if (slides.length === 0) {
-      return {
-        kind: "abstract",
-        item: abstractItems[slotIndex],
-        index: slotIndex,
-      };
+      return { kind: "abstract", item: abstractItems[slotIndex], index: slotIndex };
     }
     if (slides.length === 1) {
       return slotIndex === 0
@@ -82,18 +78,18 @@ export function LandingDesignShowcase({
   });
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {slides.length > 1 && (
-        <div className="flex flex-wrap items-center justify-between gap-2 px-1">
-          <span className="liquid-pill inline-flex items-center gap-2 rounded-full px-3.5 py-1 font-mono text-[11px] uppercase tracking-[0.16em] text-white/80">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <span className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-neutral-500">
             <span
-              className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"
+              className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"
               aria-hidden="true"
             />
             <span>{liveRotationLabel}</span>
           </span>
 
-          <div className="liquid-pill flex items-center gap-1.5 rounded-full px-3 py-1.5">
+          <div className="flex items-center gap-1.5">
             {slides.slice(0, 8).map((_, idx) => {
               const isActive = tick % slides.length === idx;
               return (
@@ -104,8 +100,8 @@ export function LandingDesignShowcase({
                   aria-label={`Slide ${idx + 1}`}
                   className={
                     isActive
-                      ? "h-2 w-6 rounded-full bg-white transition-all"
-                      : "h-2 w-2 rounded-full bg-white/35 hover:bg-white/70 transition-all"
+                      ? "h-1.5 w-6 bg-foreground transition-all"
+                      : "h-1.5 w-2 bg-neutral-700 hover:bg-neutral-500 transition-all"
                   }
                 />
               );
@@ -134,36 +130,33 @@ export function LandingDesignShowcase({
                 onMouseLeave={() => setHoveredIndex(null)}
                 onFocus={() => setHoveredIndex(slot.index)}
                 onBlur={() => setHoveredIndex(null)}
-                className={`liquid-glass group relative flex min-h-[400px] flex-col overflow-hidden rounded-[36px] p-3.5 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:border-white/40 active:scale-[0.99] ${flexClass}`}
+                className={`group relative flex min-h-[380px] flex-col justify-between overflow-hidden border border-neutral-800 bg-neutral-950/60 p-6 transition-all duration-500 ease-out hover:border-foreground ${flexClass}`}
               >
-                <div className="relative flex flex-1 flex-col justify-between overflow-hidden rounded-[28px] border border-white/15 bg-gradient-to-br from-fuchsia-950/35 via-white/[0.04] to-black/70 p-6">
-                  <div
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 opacity-30 transition-opacity duration-500 group-hover:opacity-60"
+                >
+                  <div className="absolute left-10 top-12 h-36 w-36 rounded-full border border-neutral-800 transition-transform duration-500 group-hover:scale-110" />
+                  <div className="absolute bottom-12 right-10 h-28 w-52 border border-neutral-800" />
+                </div>
+
+                <div className="relative z-10 flex items-center justify-between">
+                  <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-neutral-500">
+                    {slot.item.tag}
+                  </span>
+                  <ArrowUpRight
+                    className="h-4 w-4 text-neutral-400 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground"
                     aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 opacity-45 transition-opacity duration-500 group-hover:opacity-75"
-                  >
-                    <div className="absolute left-10 top-12 h-36 w-36 rounded-full border border-white/25 transition-transform duration-500 group-hover:scale-110" />
-                    <div className="absolute bottom-14 right-10 h-24 w-44 rounded-[22px] border border-white/20" />
-                  </div>
+                  />
+                </div>
 
-                  <div className="relative z-10 flex items-center justify-between">
-                    <span className="liquid-pill rounded-full px-3.5 py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-white/90">
-                      {slot.item.tag}
-                    </span>
-                    <span className="liquid-pill flex h-9 w-9 items-center justify-center rounded-full text-white transition-transform duration-300 group-hover:scale-110">
-                      <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                    </span>
-                  </div>
-
-                  <div className="relative z-10 pt-28">
-                    <div className="liquid-glass inline-block rounded-[22px] px-4 py-3 text-white">
-                      <h3 className="text-xl font-semibold tracking-tight">
-                        {slot.item.title}
-                      </h3>
-                      <p className="mt-1 font-mono text-xs text-white/65">
-                        {slot.item.subtitle}
-                      </p>
-                    </div>
-                  </div>
+                <div className="relative z-10 space-y-2 pt-28">
+                  <h3 className="text-2xl font-semibold tracking-tight text-white">
+                    {slot.item.title}
+                  </h3>
+                  <p className="font-mono text-xs text-neutral-500">
+                    {slot.item.subtitle}
+                  </p>
                 </div>
               </Link>
             );
@@ -181,64 +174,62 @@ export function LandingDesignShowcase({
               onMouseLeave={() => setHoveredIndex(null)}
               onFocus={() => setHoveredIndex(slot.index)}
               onBlur={() => setHoveredIndex(null)}
-              className={`liquid-glass group relative flex min-h-[400px] flex-col overflow-hidden rounded-[36px] p-3.5 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:border-white/40 active:scale-[0.99] ${flexClass}`}
+              className={`group relative flex min-h-[380px] flex-col justify-between overflow-hidden border border-neutral-800 p-6 transition-all duration-500 ease-out hover:border-foreground ${flexClass}`}
             >
-              <div className="relative flex flex-1 flex-col justify-between overflow-hidden rounded-[28px] border border-white/15 p-5 sm:p-6">
-                {imageUrl ? (
-                  <Image
-                    key={imageUrl}
-                    src={imageUrl}
-                    alt={title}
-                    fill
-                    unoptimized
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
-                  />
-                ) : (
-                  <div
-                    aria-hidden="true"
-                    className="absolute inset-0 bg-gradient-to-br from-purple-950/60 via-neutral-900 to-black"
-                  />
-                )}
-
+              {imageUrl ? (
+                <Image
+                  key={imageUrl}
+                  src={imageUrl}
+                  alt={title}
+                  fill
+                  unoptimized
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                />
+              ) : (
                 <div
                   aria-hidden="true"
-                  className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/20"
-                />
-
-                <div className="relative z-10 flex items-center justify-between gap-3">
-                  <span className="liquid-pill rounded-full px-3.5 py-1 font-mono text-[11px] uppercase tracking-[0.16em] text-white">
-                    0{slot.index + 1} ·{" "}
-                    {project.tags.slice(0, 3).join(" · ") || "DESIGN"}
-                  </span>
-                  <span className="liquid-pill inline-flex items-center gap-1 rounded-full px-3.5 py-1.5 text-xs font-medium text-white transition-transform duration-300 group-hover:scale-105">
-                    <span>{inspectLabel}</span>
-                    <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
-                  </span>
+                  className="absolute inset-0 bg-neutral-900"
+                >
+                  <div className="absolute inset-8 border border-dashed border-neutral-700" />
                 </div>
+              )}
 
-                <div className="relative z-10 pt-32">
-                  <div className="liquid-glass inline-block max-w-xl rounded-[24px] px-5 py-3.5 text-white">
-                    <h3 className="text-xl font-semibold tracking-tight sm:text-2xl">
-                      {title}
-                    </h3>
-                    {description && (
-                      <p className="mt-1 line-clamp-2 text-xs text-white/75 sm:text-sm">
-                        {description}
-                      </p>
-                    )}
-                  </div>
-                </div>
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/20 transition-opacity duration-300 group-hover:from-black/90"
+              />
+
+              <div className="relative z-10 flex items-center justify-between text-white">
+                <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-neutral-300">
+                  0{slot.index + 1} /{" "}
+                  {project.tags.slice(0, 3).join(" · ") || "DESIGN"}
+                </span>
+                <span className="inline-flex items-center gap-1 border border-white/30 bg-black/40 px-2.5 py-1 font-mono text-[11px] uppercase tracking-wider backdrop-blur-xs">
+                  <span>{inspectLabel}</span>
+                  <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                </span>
+              </div>
+
+              <div className="relative z-10 space-y-2 pt-32 text-white">
+                <h3 className="text-2xl font-semibold tracking-tight md:text-3xl">
+                  {title}
+                </h3>
+                {description && (
+                  <p className="line-clamp-2 max-w-xl text-sm text-neutral-200">
+                    {description}
+                  </p>
+                )}
               </div>
             </Link>
           );
         })}
       </div>
 
-      <div className="flex justify-center">
+      <div className="flex justify-center pt-2">
         <Link
           href="/design"
-          className="liquid-pill inline-flex w-full items-center justify-center gap-2 rounded-full px-8 py-4 text-xs font-semibold uppercase tracking-[0.18em] text-white transition-all duration-300 hover:scale-[1.03] hover:bg-white/20 active:scale-95 sm:w-auto"
+          className="inline-flex w-full items-center justify-center gap-2 border border-neutral-700 px-6 py-3.5 font-mono text-xs uppercase tracking-[0.2em] text-white transition-colors hover:border-foreground hover:bg-foreground hover:text-background sm:w-auto"
         >
           <span>{viewAllLabel}</span>
           <ArrowRight className="h-4 w-4" aria-hidden="true" />

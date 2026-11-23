@@ -97,11 +97,11 @@ export function ContactForm({ onNavigatePrivacy }: ContactFormProps) {
           <CheckCircle2 className="h-7 w-7" aria-hidden="true" />
         </div>
         <p className="text-base font-medium text-white">{t("successMessage")}</p>
-        <button
-          type="button"
-          onClick={() => setIsSuccess(false)}
-          className="liquid-pill rounded-full px-4 py-1.5 text-xs font-medium text-white/90 transition-transform hover:scale-105 active:scale-95"
-        >
+          <button
+            type="button"
+            onClick={() => setIsSuccess(false)}
+            className="glass-pill rounded-full px-4 py-1.5 text-xs font-medium text-white/90 transition-transform hover:scale-105 active:scale-95"
+          >
           {t("submitButton")}
         </button>
       </div>
@@ -241,7 +241,7 @@ export function ContactForm({ onNavigatePrivacy }: ContactFormProps) {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="liquid-drop-active w-full rounded-full py-3 text-sm font-semibold text-white transition-all duration-300 hover:scale-[1.01] active:scale-[0.98] disabled:opacity-50"
+          className="glass-droplet w-full rounded-full py-3 text-sm font-semibold text-white transition-all duration-300 hover:scale-[1.01] active:scale-[0.98] disabled:opacity-50"
         >
           {isSubmitting ? t("submittingButton") : t("submitButton")}
         </button>

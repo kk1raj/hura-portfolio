@@ -71,42 +71,45 @@ export default async function ProjectDetailPage({
     }
 
     return (
-      <article className="space-y-8">
-        <div className="flex flex-wrap items-center gap-3 text-sm">
+      <article className="mx-auto w-full max-w-[1440px] space-y-8 px-4 pt-32 pb-16 sm:px-6 md:px-10 md:pt-24">
+        <div className="flex flex-wrap items-center gap-4 text-sm">
           <Link
             href="/design"
-            className="liquid-pill inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs text-white transition-transform hover:scale-105"
+            className="inline-flex items-center gap-1.5 text-neutral-400 hover:text-white"
           >
             <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
             <span>{t("backToDesign")}</span>
           </Link>
+          <span className="text-neutral-700" aria-hidden="true">
+            /
+          </span>
           <Link
             href="/websites"
-            className="liquid-pill inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs text-white transition-transform hover:scale-105"
+            className="inline-flex items-center gap-1.5 text-neutral-400 hover:text-white"
           >
             <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
             <span>{t("backToWebsites")}</span>
           </Link>
         </div>
 
-        <header className="liquid-glass space-y-2 rounded-[32px] p-6 sm:p-8">
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/55">
+        <header className="space-y-2 border-b border-dashed border-neutral-800 pb-6">
+          <p className="font-mono text-xs uppercase tracking-widest text-neutral-500">
             {t("badge")}
           </p>
           <h1 className="text-3xl font-semibold tracking-tight text-white">
             {slug}
           </h1>
-          <p className="font-mono text-xs text-white/55">
+          <p className="font-mono text-xs text-neutral-500">
             {t("slugLabel")}: {slug}
           </p>
         </header>
 
-        <div className="liquid-glass space-y-4 rounded-[36px] p-6 sm:p-8">
+        <div className="space-y-4 rounded-lg border border-dashed border-neutral-800 p-6">
           <h2 className="text-lg font-medium text-white">
             {t("overviewTitle")}
           </h2>
-          <div className="aspect-video w-full rounded-[26px] border border-dashed border-white/20 bg-white/[0.04]" />
-          <p className="text-sm text-white/70">{t("overviewPlaceholder")}</p>
+          <div className="aspect-video w-full rounded border border-dashed border-neutral-700 bg-neutral-900/50" />
+          <p className="text-sm text-neutral-400">{t("overviewPlaceholder")}</p>
         </div>
       </article>
     );
@@ -134,22 +137,22 @@ export default async function ProjectDetailPage({
         ].filter((item): item is { label: string; href: string } => item !== null);
 
   return (
-    <article className="space-y-8">
+    <article className="mx-auto w-full max-w-[1440px] space-y-8 px-4 pt-32 pb-16 sm:px-6 md:px-10 md:pt-24">
       <div>
         <Link
           href={backHref}
-          className="liquid-pill inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-medium text-white transition-transform hover:scale-105 active:scale-95"
+          className="inline-flex items-center gap-1.5 text-sm text-neutral-400 hover:text-white"
         >
           <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
           <span>{backLabel}</span>
         </Link>
       </div>
 
-      <header className="liquid-glass space-y-4 rounded-[36px] p-6 sm:p-8">
-        <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/55">
+      <header className="space-y-4 border-b border-dashed border-neutral-800 pb-6">
+        <p className="font-mono text-xs uppercase tracking-widest text-neutral-500">
           {project.section}
         </p>
-        <h1 className="text-3xl font-semibold tracking-tight text-white md:text-4xl">
+        <h1 className="text-3xl font-semibold tracking-tight text-white">
           {title}
         </h1>
 
@@ -158,7 +161,7 @@ export default async function ProjectDetailPage({
             {project.tags.map((tag) => (
               <li
                 key={tag}
-                className="rounded-full border border-white/20 bg-white/10 px-3 py-0.5 font-mono text-xs text-white/85"
+                className="rounded border border-neutral-800 px-2.5 py-0.5 font-mono text-xs text-neutral-400"
               >
                 {tag}
               </li>
@@ -174,7 +177,7 @@ export default async function ProjectDetailPage({
                 href={item.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="liquid-drop-active inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-semibold text-white transition-transform hover:scale-105 active:scale-95"
+                className="inline-flex items-center gap-1.5 rounded-md border border-neutral-200 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-neutral-900"
               >
                 <span>{item.label}</span>
                 <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
@@ -185,24 +188,24 @@ export default async function ProjectDetailPage({
       </header>
 
       {project.cover_image && (
-        <div className="liquid-glass overflow-hidden rounded-[36px] p-3">
+        <div className="overflow-hidden rounded-lg border border-neutral-800">
           <Image
             src={project.cover_image}
             alt={title}
             width={1280}
             height={720}
             unoptimized
-            className="h-auto w-full rounded-[26px] object-cover"
+            className="h-auto w-full object-cover"
           />
         </div>
       )}
 
       {description && (
-        <section className="liquid-glass space-y-2 rounded-[32px] p-6 sm:p-8">
-          <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-white/55">
+        <section className="space-y-2 rounded-lg border border-neutral-800 p-6">
+          <h2 className="text-lg font-medium text-white">
             {t("overviewTitle")}
           </h2>
-          <p className="whitespace-pre-line text-sm leading-relaxed text-white/85 sm:text-base">
+          <p className="whitespace-pre-line text-sm leading-relaxed text-neutral-300">
             {description}
           </p>
         </section>
@@ -210,14 +213,14 @@ export default async function ProjectDetailPage({
 
       {project.gallery.length > 0 && (
         <section className="space-y-4">
-          <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-white/55 px-1">
+          <h2 className="text-lg font-medium text-white">
             {t("galleryTitle")}
           </h2>
-          <div className="grid gap-6 sm:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2">
             {project.gallery.map((imageUrl, idx) => (
               <div
                 key={`${imageUrl}-${idx}`}
-                className="liquid-glass overflow-hidden rounded-[32px] p-3"
+                className="overflow-hidden rounded-lg border border-neutral-800"
               >
                 <Image
                   src={imageUrl}
@@ -225,7 +228,7 @@ export default async function ProjectDetailPage({
                   width={1200}
                   height={800}
                   unoptimized
-                  className="h-auto w-full rounded-[24px] object-cover"
+                  className="h-auto w-full object-cover"
                 />
               </div>
             ))}

@@ -13,15 +13,15 @@ export async function DesignSection({ locale }: { locale: Locale }) {
   ]);
 
   return (
-    <section className="space-y-8">
-      <header className="space-y-2 border-b border-white/15 pb-6">
-        <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
+    <section className="mx-auto w-full max-w-[1440px] space-y-8 px-4 pt-32 pb-16 sm:px-6 md:px-10 md:pt-24">
+      <header className="space-y-2 border-b border-dashed border-neutral-800 pb-6">
+        <p className="font-mono text-xs uppercase tracking-widest text-neutral-500">
           {t("badge")}
         </p>
-        <h1 className="text-3xl font-semibold tracking-tight text-white md:text-4xl">
+        <h1 className="text-3xl font-semibold tracking-tight text-white">
           {t("title")}
         </h1>
-        <p className="max-w-2xl text-sm text-white/65">{t("subtitle")}</p>
+        <p className="max-w-2xl text-sm text-neutral-400">{t("subtitle")}</p>
       </header>
 
       {projects.length > 0 ? (
@@ -39,23 +39,21 @@ export async function DesignSection({ locale }: { locale: Locale }) {
           ))}
         </div>
       ) : (
-        <div className="grid gap-6 sm:grid-cols-2">
-          <article className="liquid-glass flex flex-col justify-between gap-4 rounded-[36px] p-5">
-            <div className="space-y-4">
-              <div className="aspect-[16/10] w-full rounded-[26px] border border-dashed border-white/20 bg-white/[0.04]" />
-              <div className="space-y-1.5 px-1">
-                <h2 className="text-lg font-medium text-white">
-                  {t("sampleProjectTitle")}
-                </h2>
-                <p className="text-sm text-white/65">
-                  {t("sampleProjectSummary")}
-                </p>
-              </div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <article className="flex flex-col justify-between gap-4 rounded-lg border border-neutral-800 p-5">
+            <div className="space-y-3">
+              <div className="aspect-video w-full rounded border border-dashed border-neutral-700 bg-neutral-900/50" />
+              <h2 className="text-lg font-medium text-white">
+                {t("sampleProjectTitle")}
+              </h2>
+              <p className="text-sm text-neutral-400">
+                {t("sampleProjectSummary")}
+              </p>
             </div>
-            <div className="px-1">
+            <div>
               <Link
                 href="/projects/design-case-study"
-                className="liquid-pill inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-medium text-white transition-transform hover:scale-105 active:scale-95"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-white underline underline-offset-4 hover:opacity-80"
               >
                 <span>{t("viewProject")}</span>
                 <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
@@ -63,8 +61,8 @@ export async function DesignSection({ locale }: { locale: Locale }) {
             </div>
           </article>
 
-          <div className="liquid-glass flex items-center justify-center rounded-[36px] p-8 text-center">
-            <p className="text-sm text-white/60">{t("emptyState")}</p>
+          <div className="flex items-center justify-center rounded-lg border border-dashed border-neutral-700 p-5 text-center">
+            <p className="text-sm text-neutral-500">{t("emptyState")}</p>
           </div>
         </div>
       )}

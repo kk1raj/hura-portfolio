@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { MessageSquare } from "lucide-react";
 import { OPEN_CONTACT_MODAL_EVENT } from "@/components/ContactModal";
@@ -29,10 +29,15 @@ const NAV_TABS: readonly NavTab[] = [
   {
     key: "cv",
     href: "/cv",
-    isActive: (pathname) =>
-      pathname === "/cv" || pathname.startsWith("/cv/"),
+    isActive: (pathname) => pathname === "/cv" || pathname.startsWith("/cv/"),
   },
 ];
+
+interface DropletRect {
+  left: number;
+  width: number;
+  visible: boolean;
+}
 
 interface HeaderProps {
   brandName?: string;
@@ -45,36 +50,182 @@ export function Header({ brandName }: HeaderProps) {
   const isHomeActive = pathname === "/";
   const displayBrand = brandName?.trim() || t("brand");
 
+  const headerRef = useRef<HTMLElement | null>(null);
+  const navTrackRef = useRef<HTMLDivElement | null>(null);
+  const navTabRefs = useRef<Array<HTMLAnchorElement | null>>([]);
+  const localeTrackRef = useRef<HTMLDivElement | null>(null);
+  const localeItemRefs = useRef<Array<HTMLAnchorElement | null>>([]);
+
   const activeNavIndex = NAV_TABS.findIndex((tab) => tab.isActive(pathname));
+  const activeLocaleIndex = Math.max(0, LOCALES.indexOf(currentLocale));
+
   const [hoveredNavIndex, setHoveredNavIndex] = useState<number | null>(null);
   const [hoveredLocaleIndex, setHoveredLocaleIndex] = useState<number | null>(
     null
   );
+  const [isBrandHovered, setIsBrandHovered] = useState(false);
+
+  const [navDroplet, setNavDroplet] = useState<DropletRect>({
+    left: 0,
+    width: 0,
+    visible: false,
+  });
+  const [localeDroplet, setLocaleDroplet] = useState<DropletRect>({
+    left: 0,
+    width: 0,
+    visible: false,
+  });
 
   const visibleNavIndex =
     hoveredNavIndex !== null ? hoveredNavIndex : activeNavIndex;
-  const showNavDrop = visibleNavIndex >= 0;
-
-  const activeLocaleIndex = LOCALES.indexOf(currentLocale);
   const visibleLocaleIndex =
     hoveredLocaleIndex !== null ? hoveredLocaleIndex : activeLocaleIndex;
 
+  const syncNavDroplet = useCallback((targetIndex: number) => {
+    if (targetIndex < 0) {
+      setNavDroplet((prev) =>
+        prev.visible ? { ...prev, visible: false } : prev
+      );
+      return;
+    }
+    const targetEl = navTabRefs.current[targetIndex];
+    if (!targetEl) return;
+
+    const left = targetEl.offsetLeft;
+    const width = targetEl.offsetWidth;
+    setNavDroplet((prev) => {
+      if (prev.visible && prev.left === left && prev.width === width) {
+        return prev;
+      }
+      return { left, width, visible: true };
+    });
+  }, []);
+
+  const syncLocaleDroplet = useCallback((targetIndex: number) => {
+    const safeIndex = targetIndex >= 0 ? targetIndex : 0;
+    const targetEl = localeItemRefs.current[safeIndex];
+    if (!targetEl) return;
+
+    const left = targetEl.offsetLeft;
+    const width = targetEl.offsetWidth;
+    setLocaleDroplet((prev) => {
+      if (prev.visible && prev.left === left && prev.width === width) {
+        return prev;
+      }
+      return { left, width, visible: true };
+    });
+  }, []);
+
+  useEffect(() => {
+    const rafId = window.requestAnimationFrame(() => {
+      syncNavDroplet(visibleNavIndex);
+      syncLocaleDroplet(visibleLocaleIndex);
+    });
+
+    const handleResize = () => {
+      syncNavDroplet(visibleNavIndex);
+      syncLocaleDroplet(visibleLocaleIndex);
+    };
+    window.addEventListener("resize", handleResize);
+
+    const observer =
+      typeof ResizeObserver !== "undefined"
+        ? new ResizeObserver(() => {
+            syncNavDroplet(visibleNavIndex);
+            syncLocaleDroplet(visibleLocaleIndex);
+          })
+        : null;
+
+    if (observer) {
+      if (navTrackRef.current) observer.observe(navTrackRef.current);
+      if (localeTrackRef.current) observer.observe(localeTrackRef.current);
+    }
+
+    return () => {
+      window.cancelAnimationFrame(rafId);
+      window.removeEventListener("resize", handleResize);
+      observer?.disconnect();
+    };
+  }, [
+    visibleNavIndex,
+    visibleLocaleIndex,
+    currentLocale,
+    pathname,
+    syncNavDroplet,
+    syncLocaleDroplet,
+  ]);
+
+  function handleHeaderMouseMove(event: React.MouseEvent<HTMLElement>) {
+    const el = headerRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    el.style.setProperty("--mx", `${event.clientX - rect.left}px`);
+    el.style.setProperty("--my", `${event.clientY - rect.top}px`);
+  }
+
+  function handleNavEnter(index: number) {
+    setHoveredNavIndex(index);
+    syncNavDroplet(index);
+  }
+
+  function handleNavLeave() {
+    setHoveredNavIndex(null);
+    syncNavDroplet(activeNavIndex);
+  }
+
+  function handleLocaleEnter(index: number) {
+    setHoveredLocaleIndex(index);
+    syncLocaleDroplet(index);
+  }
+
+  function handleLocaleLeave() {
+    setHoveredLocaleIndex(null);
+    syncLocaleDroplet(activeLocaleIndex);
+  }
+
+  const brandHighlighted = isHomeActive || isBrandHovered;
+
   return (
-    <header className="sticky top-0 z-40 w-full">
-      <div className="mx-auto grid max-w-[1440px] grid-cols-2 items-center gap-3 px-4 py-4 sm:px-6 md:grid-cols-3 md:px-10">
-        <div className="justify-self-start">
+    <header
+      ref={headerRef}
+      onMouseMove={handleHeaderMouseMove}
+      className="glass-bar fixed inset-x-0 top-0 z-40 w-full border-b border-white/10"
+    >
+      {/* Refractive bottom edge strip for optical glass background distortion */}
+      <div
+        aria-hidden="true"
+        className="glass-refract-edge pointer-events-none absolute inset-x-0 bottom-0 h-3 opacity-85"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-75"
+        style={{
+          background:
+            "radial-gradient(280px circle at var(--mx, 50%) var(--my, 0%), rgba(255,255,255,0.09), transparent 70%)",
+        }}
+      />
+
+      <div className="relative z-10 mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-x-2 gap-y-2.5 px-3 py-2.5 sm:px-6 sm:py-3 md:grid md:grid-cols-[1fr_auto_1fr] md:gap-3 md:px-10">
+        {/* Left: Brand Pill */}
+        <div className="order-1 shrink-0 md:justify-self-start">
           <Link
             href="/"
             aria-current={isHomeActive ? "page" : undefined}
-            className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.22em] text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:scale-[1.05] active:scale-95 ${
-              isHomeActive
-                ? "liquid-pill liquid-drop-active"
-                : "liquid-pill hover:bg-white/20"
+            onMouseEnter={() => setIsBrandHovered(true)}
+            onMouseLeave={() => setIsBrandHovered(false)}
+            onFocus={() => setIsBrandHovered(true)}
+            onBlur={() => setIsBrandHovered(false)}
+            className={`relative inline-flex items-center gap-1.5 sm:gap-2 rounded-full px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.15em] text-white transition-all duration-300 active:scale-95 sm:px-4 sm:py-2 sm:text-xs sm:tracking-[0.22em] ${
+              brandHighlighted
+                ? "glass-droplet"
+                : "glass-capsule hover:border-white/30"
             }`}
           >
             <span
-              className={`h-2 w-2 rounded-full transition-colors ${
-                isHomeActive ? "bg-white shadow-[0_0_10px_#fff]" : "bg-white/50"
+              className={`h-1.5 w-1.5 rounded-full transition-all duration-300 ${
+                isHomeActive
+                  ? "bg-white shadow-[0_0_8px_rgba(255,255,255,0.95)]"
+                  : "bg-white/50"
               }`}
               aria-hidden="true"
             />
@@ -82,21 +233,26 @@ export function Header({ brandName }: HeaderProps) {
           </Link>
         </div>
 
+        {/* Center: Telegram iOS Sliding Droplet Capsule */}
         <nav
           aria-label={t("brand")}
-          onMouseLeave={() => setHoveredNavIndex(null)}
-          className="col-span-2 order-3 justify-self-center md:col-span-1 md:order-2"
+          onMouseLeave={handleNavLeave}
+          className="order-3 flex w-full justify-center md:order-2 md:w-auto md:justify-self-center"
         >
-          <div className="liquid-pill relative grid w-[300px] grid-cols-3 items-center rounded-full p-1.5 sm:w-[360px]">
+          <div
+            ref={navTrackRef}
+            className="glass-capsule relative inline-flex items-center gap-0.5 rounded-full p-1"
+          >
             <span
               aria-hidden="true"
-              className={`pointer-events-none absolute top-1.5 bottom-1.5 left-1.5 w-[calc((100%-0.75rem)/3)] rounded-full liquid-drop-active transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
-                showNavDrop
-                  ? "opacity-100 scale-100"
-                  : "opacity-0 scale-90"
-              } ${hoveredNavIndex !== null ? "scale-x-[1.04]" : ""}`}
+              className={`glass-droplet pointer-events-none absolute top-1 bottom-1 left-0 rounded-full transition-[transform,width,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                navDroplet.visible && navDroplet.width > 0
+                  ? "opacity-100"
+                  : "opacity-0"
+              }`}
               style={{
-                transform: `translateX(${Math.max(0, visibleNavIndex) * 100}%)`,
+                width: `${navDroplet.width}px`,
+                transform: `translate3d(${navDroplet.left}px, 0, 0)`,
               }}
             />
 
@@ -106,15 +262,18 @@ export function Header({ brandName }: HeaderProps) {
               return (
                 <Link
                   key={tab.key}
+                  ref={(el) => {
+                    navTabRefs.current[idx] = el;
+                  }}
                   href={tab.href}
                   aria-current={active ? "page" : undefined}
-                  onMouseEnter={() => setHoveredNavIndex(idx)}
-                  onFocus={() => setHoveredNavIndex(idx)}
-                  onBlur={() => setHoveredNavIndex(null)}
-                  className={`relative z-10 flex items-center justify-center rounded-full py-2 text-xs font-medium tracking-[0.08em] transition-all duration-300 active:scale-95 ${
+                  onMouseEnter={() => handleNavEnter(idx)}
+                  onFocus={() => handleNavEnter(idx)}
+                  onBlur={handleNavLeave}
+                  className={`relative z-10 whitespace-nowrap rounded-full px-4 py-1.5 text-xs tracking-[0.06em] transition-colors duration-200 active:scale-95 sm:px-5 ${
                     highlighted
-                      ? "text-white font-semibold"
-                      : "text-white/70 hover:text-white"
+                      ? "font-semibold text-white"
+                      : "font-medium text-white/70 hover:text-white"
                   }`}
                 >
                   {t(tab.key)}
@@ -124,34 +283,47 @@ export function Header({ brandName }: HeaderProps) {
           </div>
         </nav>
 
-        <div className="order-2 flex items-center justify-self-end gap-2.5 md:order-3">
+        {/* Right: Sliding Language Droplet + Contacts Trigger */}
+        <div className="order-2 flex shrink-0 items-center gap-1.5 sm:gap-2 md:order-3 md:justify-self-end">
           <div
+            ref={localeTrackRef}
             role="group"
             aria-label={t("languageLabel")}
-            onMouseLeave={() => setHoveredLocaleIndex(null)}
-            className="liquid-pill relative hidden grid-cols-4 items-center rounded-full p-1 sm:grid"
+            onMouseLeave={handleLocaleLeave}
+            className="glass-capsule relative hidden items-center rounded-full p-1 sm:inline-flex"
           >
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute top-1 bottom-1 left-1 w-[calc((100%-0.5rem)/4)] rounded-full bg-white/25 border border-white/35 shadow-[inset_0_1px_2px_rgba(255,255,255,0.6)] transition-all duration-400 ease-[cubic-bezier(0.32,0.72,0,1)]"
+              className={`glass-droplet pointer-events-none absolute top-1 bottom-1 left-0 rounded-full transition-[transform,width,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                localeDroplet.visible && localeDroplet.width > 0
+                  ? "opacity-100"
+                  : "opacity-0"
+              }`}
               style={{
-                transform: `translateX(${Math.max(0, visibleLocaleIndex) * 100}%)`,
+                width: `${localeDroplet.width}px`,
+                transform: `translate3d(${localeDroplet.left}px, 0, 0)`,
               }}
             />
 
             {LOCALES.map((loc, idx) => {
               const isCurrent = loc === currentLocale;
+              const highlighted = visibleLocaleIndex === idx;
               return (
                 <Link
                   key={loc}
+                  ref={(el) => {
+                    localeItemRefs.current[idx] = el;
+                  }}
                   href={pathname}
                   locale={loc}
                   aria-current={isCurrent ? "true" : undefined}
-                  onMouseEnter={() => setHoveredLocaleIndex(idx)}
-                  className={`relative z-10 px-2.5 py-1 text-center font-mono text-[10px] font-semibold tracking-wider transition-colors active:scale-95 ${
-                    visibleLocaleIndex === idx
+                  onMouseEnter={() => handleLocaleEnter(idx)}
+                  onFocus={() => handleLocaleEnter(idx)}
+                  onBlur={handleLocaleLeave}
+                  className={`relative z-10 rounded-full px-2.5 py-1 font-mono text-[10px] font-semibold tracking-wider transition-colors active:scale-95 ${
+                    highlighted
                       ? "text-white"
-                      : "text-white/65 hover:text-white"
+                      : "text-white/60 hover:text-white"
                   }`}
                 >
                   {loc.toUpperCase()}
@@ -160,7 +332,8 @@ export function Header({ brandName }: HeaderProps) {
             })}
           </div>
 
-          <div className="liquid-pill flex items-center gap-0.5 rounded-full p-1 sm:hidden">
+          {/* Mobile compact language bar */}
+          <div className="glass-capsule flex items-center gap-0.5 rounded-full p-0.5 sm:hidden">
             {LOCALES.map((loc) => {
               const isCurrent = loc === currentLocale;
               return (
@@ -168,8 +341,8 @@ export function Header({ brandName }: HeaderProps) {
                   key={loc}
                   href={pathname}
                   locale={loc}
-                  className={`rounded-full px-1.5 py-1 font-mono text-[10px] font-semibold ${
-                    isCurrent ? "bg-white/25 text-white" : "text-white/65"
+                  className={`rounded-full px-1.5 py-0.5 font-mono text-[10px] font-semibold ${
+                    isCurrent ? "glass-droplet text-white" : "text-white/65"
                   }`}
                 >
                   {loc.toUpperCase()}
@@ -183,7 +356,7 @@ export function Header({ brandName }: HeaderProps) {
             onClick={() =>
               window.dispatchEvent(new Event(OPEN_CONTACT_MODAL_EVENT))
             }
-            className="liquid-pill inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-medium text-white transition-all duration-300 hover:scale-[1.04] hover:bg-white/20 active:scale-95"
+            className="glass-pill inline-flex items-center gap-1 sm:gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-medium text-white transition-all duration-300 hover:border-white/35 hover:bg-white/10 active:scale-95 sm:px-4 sm:py-2 sm:text-xs"
           >
             <MessageSquare className="h-3.5 w-3.5" aria-hidden="true" />
             <span>{t("contactCta")}</span>

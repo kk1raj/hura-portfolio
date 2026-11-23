@@ -10,7 +10,7 @@ export function CookieSettingsButton() {
     <button
       type="button"
       onClick={() => window.dispatchEvent(new Event(OPEN_COOKIE_SETTINGS_EVENT))}
-      className="hover:text-foreground underline underline-offset-4"
+      className="underline underline-offset-4 transition-colors hover:text-white"
     >
       {t("footerTrigger")}
     </button>

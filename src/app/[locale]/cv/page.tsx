@@ -44,13 +44,13 @@ export default async function CvPage({
   const aboutText = getLocalizedValue(cvData.about, locale) || t("summaryText");
 
   return (
-    <section className="space-y-8">
-      <header className="liquid-glass space-y-4 rounded-[36px] p-6 sm:p-8">
+    <section className="mx-auto w-full max-w-[1440px] space-y-10 px-4 pt-32 pb-16 sm:px-6 md:px-10 md:pt-24">
+      <header className="space-y-3 border-b border-neutral-800 pb-8">
         <div className="flex flex-wrap items-center gap-3">
-          <span className="liquid-pill rounded-full px-3.5 py-1 font-mono text-[11px] uppercase tracking-[0.2em] text-white/90">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-neutral-500">
             {t("badge")}
-          </span>
-          <span className="liquid-pill inline-flex items-center gap-2 rounded-full px-3.5 py-1 text-xs font-medium text-white">
+          </p>
+          <span className="inline-flex items-center gap-2 rounded border border-neutral-700 px-2.5 py-0.5 text-xs font-medium text-white">
             <span
               className={`h-2 w-2 rounded-full ${
                 settings.availableForWork ? "bg-emerald-400" : "bg-amber-400"
@@ -66,31 +66,31 @@ export default async function CvPage({
         </div>
 
         <div className="flex flex-wrap items-baseline gap-3">
-          <h1 className="text-3xl font-semibold tracking-tight text-white md:text-5xl">
+          <h1 className="text-3xl font-semibold tracking-tight text-white md:text-4xl">
             {settings.fullName || t("title")}
           </h1>
           {settings.nickname && (
-            <span className="font-mono text-sm text-white/55">
+            <span className="font-mono text-sm text-neutral-500">
               @{settings.nickname}
             </span>
           )}
         </div>
 
-        <p className="max-w-3xl text-sm text-white/70">{t("subtitle")}</p>
+        <p className="max-w-3xl text-sm text-neutral-400">{t("subtitle")}</p>
       </header>
 
-      <div className="space-y-6">
-        <article className="liquid-glass space-y-3 rounded-[32px] p-6 sm:p-8">
-          <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-white/55">
+      <div className="space-y-8">
+        <article className="space-y-3 border border-neutral-800 p-6">
+          <h2 className="font-mono text-xs uppercase tracking-[0.18em] text-neutral-500">
             {t("summaryTitle")}
           </h2>
-          <p className="max-w-4xl whitespace-pre-line text-sm leading-relaxed text-white/85 sm:text-base">
+          <p className="max-w-4xl whitespace-pre-line text-sm leading-relaxed text-neutral-300">
             {aboutText}
           </p>
         </article>
 
-        <article className="liquid-glass space-y-4 rounded-[32px] p-6 sm:p-8">
-          <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-white/55">
+        <article className="space-y-4 border border-neutral-800 p-6">
+          <h2 className="font-mono text-xs uppercase tracking-[0.18em] text-neutral-500">
             {t("languagesTitle")}
           </h2>
           <LanguageBadgesRow
@@ -100,8 +100,8 @@ export default async function CvPage({
         </article>
 
         <div className="grid gap-6 lg:grid-cols-2">
-          <article className="liquid-glass space-y-4 rounded-[32px] p-6 sm:p-8">
-            <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-white/55">
+          <article className="space-y-4 border border-neutral-800 p-6">
+            <h2 className="font-mono text-xs uppercase tracking-[0.18em] text-neutral-500">
               {t("educationTitle")}
             </h2>
             {cvData.education.length > 0 ? (
@@ -109,41 +109,43 @@ export default async function CvPage({
                 {cvData.education.map((item, idx) => (
                   <li
                     key={`${item.degree}-${idx}`}
-                    className="flex flex-wrap items-baseline justify-between gap-2 border-b border-white/10 pb-3 last:border-b-0 last:pb-0"
+                    className="flex flex-wrap items-baseline justify-between gap-2 border-b border-dashed border-neutral-800 pb-3 last:border-b-0 last:pb-0"
                   >
                     <div>
                       <p className="text-sm font-medium text-white">
                         {item.degree}
                       </p>
-                      <p className="text-xs text-white/60">{item.institution}</p>
+                      <p className="text-xs text-neutral-400">
+                        {item.institution}
+                      </p>
                     </div>
-                    <span className="font-mono text-xs text-white/60">
+                    <span className="font-mono text-xs text-neutral-500">
                       {item.period}
                     </span>
                   </li>
                 ))}
               </ul>
             ) : (
-              <p className="text-sm text-white/60">{t("educationEmpty")}</p>
+              <p className="text-sm text-neutral-500">{t("educationEmpty")}</p>
             )}
           </article>
 
-          <article className="liquid-glass space-y-4 rounded-[32px] p-6 sm:p-8">
-            <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-white/55">
+          <article className="space-y-4 border border-neutral-800 p-6">
+            <h2 className="font-mono text-xs uppercase tracking-[0.18em] text-neutral-500">
               {t("skillsTitle")}
             </h2>
             {cvData.skillCategories.length > 0 ? (
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-6 sm:grid-cols-2">
                 {cvData.skillCategories.map((group, idx) => (
                   <div key={`${group.category}-${idx}`} className="space-y-2">
-                    <h3 className="text-xs font-semibold uppercase tracking-wider text-white/75">
+                    <h3 className="text-sm font-semibold text-white">
                       {group.category}
                     </h3>
                     <ul className="flex flex-wrap gap-1.5">
                       {group.skills.map((skill) => (
                         <li
                           key={skill}
-                          className="rounded-full border border-white/20 bg-white/10 px-2.5 py-0.5 font-mono text-xs text-white/90"
+                          className="border border-neutral-800 px-2.5 py-0.5 font-mono text-xs text-neutral-300"
                         >
                           {skill}
                         </li>
@@ -153,7 +155,9 @@ export default async function CvPage({
                 ))}
               </div>
             ) : (
-              <p className="text-sm text-white/60">{t("skillsPlaceholder")}</p>
+              <p className="text-sm text-neutral-400">
+                {t("skillsPlaceholder")}
+              </p>
             )}
           </article>
         </div>

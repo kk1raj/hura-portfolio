@@ -55,15 +55,15 @@ export function ContactModal({ availableForWork }: ContactModalProps) {
       aria-modal="true"
       aria-labelledby="contact-modal-title"
       onClick={() => setIsOpen(false)}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/65 p-4 backdrop-blur-2xl"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-2xl"
     >
       <div
         onClick={(event) => event.stopPropagation()}
-        className="liquid-glass relative w-full max-w-lg rounded-[36px] p-6 sm:p-8 text-white"
+        className="glass-modal relative w-full max-w-2xl rounded-3xl p-6 text-white sm:p-8"
       >
         <div className="mb-6 flex items-start justify-between gap-4">
           <div className="space-y-1.5">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-medium text-white/90">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[11px] font-medium text-white/90">
               <span
                 className={`h-2 w-2 rounded-full ${
                   availableForWork ? "bg-emerald-400" : "bg-amber-400"
@@ -89,7 +89,7 @@ export function ContactModal({ availableForWork }: ContactModalProps) {
             type="button"
             onClick={() => setIsOpen(false)}
             aria-label={tContact("closeButton")}
-            className="liquid-pill flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-white transition-transform hover:scale-105 active:scale-95"
+            className="glass-pill flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-white transition-transform hover:scale-105 active:scale-95"
           >
             <X className="h-4 w-4" aria-hidden="true" />
           </button>

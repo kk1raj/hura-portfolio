@@ -101,7 +101,7 @@ export function CookieBanner() {
   return (
     <aside
       aria-label={t("title")}
-      className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-4xl rounded-[32px] liquid-glass p-5 sm:p-6"
+      className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-4xl rounded-3xl glass-modal p-5 sm:p-6"
     >
       <div className="space-y-4">
         <div className="space-y-1">
@@ -156,21 +156,21 @@ export function CookieBanner() {
           <button
             type="button"
             onClick={() => saveConsent(true)}
-            className="liquid-drop-active rounded-full px-4 py-1.5 text-xs font-medium text-white transition-transform hover:scale-105 active:scale-95"
+            className="glass-droplet rounded-full px-4 py-1.5 text-xs font-medium text-white transition-transform hover:scale-105 active:scale-95"
           >
             {t("acceptAll")}
           </button>
           <button
             type="button"
             onClick={() => saveConsent(false)}
-            className="liquid-pill rounded-full px-4 py-1.5 text-xs font-medium text-white/85 transition-transform hover:scale-105 active:scale-95"
+            className="glass-pill rounded-full px-4 py-1.5 text-xs font-medium text-white/85 transition-transform hover:scale-105 active:scale-95"
           >
             {t("necessaryOnly")}
           </button>
           <button
             type="button"
             onClick={() => saveConsent(analyticsChecked)}
-            className="liquid-pill rounded-full px-4 py-1.5 text-xs font-medium text-white/85 transition-transform hover:scale-105 active:scale-95"
+            className="glass-pill rounded-full px-4 py-1.5 text-xs font-medium text-white/85 transition-transform hover:scale-105 active:scale-95"
           >
             {t("savePreferences")}
           </button>

@@ -18,6 +18,9 @@ export function FloatingSocialDock({
   const telegramHref = normalizeTelegramHref(settings.telegram);
   const githubHref = normalizeHttpHref(settings.github);
   const figmaHref = normalizeHttpHref(settings.figma);
+  const hasSocialLinks = Boolean(
+    email || telegramHref || githubHref || figmaHref
+  );
 
   const btnClass =
     "flex h-10 w-10 items-center justify-center rounded-full text-white/85 transition-all duration-300 hover:scale-110 hover:bg-white/20 hover:text-white active:scale-95";
@@ -25,7 +28,7 @@ export function FloatingSocialDock({
   return (
     <aside
       aria-label={contactLabel}
-      className="fixed bottom-5 right-5 z-40 flex items-center gap-1 rounded-full liquid-pill p-1.5"
+      className="fixed bottom-5 right-5 z-40 flex items-center gap-1 rounded-full glass-capsule p-1.5"
     >
       {email && (
         <a
@@ -116,14 +119,16 @@ export function FloatingSocialDock({
         </a>
       )}
 
-      <span className="mx-0.5 h-5 w-px bg-white/20" aria-hidden="true" />
+      {hasSocialLinks && (
+        <span className="mx-0.5 h-5 w-px bg-white/20" aria-hidden="true" />
+      )}
 
       <button
         type="button"
         onClick={() => window.dispatchEvent(new Event(OPEN_CONTACT_MODAL_EVENT))}
         aria-label={contactLabel}
         title={contactLabel}
-        className="liquid-drop-active flex h-10 w-10 items-center justify-center rounded-full text-white transition-transform duration-300 hover:scale-110 active:scale-95"
+        className="glass-droplet flex h-10 w-10 items-center justify-center rounded-full text-white transition-transform duration-300 hover:scale-110 active:scale-95"
       >
         <MessageSquare className="h-4 w-4" aria-hidden="true" />
       </button>
